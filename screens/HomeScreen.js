@@ -1,6 +1,4 @@
 import {
-  FlatList,
-  StatusBar,
   Text,
   StyleSheet,
   View,
@@ -8,9 +6,9 @@ import {
   TouchableOpacity,
   Button,
 } from "react-native";
-
 import React from "react";
 import { SafeAreaView } from "react-native-safe-area-context";
+import { useNavigation } from "@react-navigation/native";
 
 const DATA = [
   {
@@ -34,7 +32,7 @@ const DATA = [
 const MainItems = [
   {
     title: "Your Information",
-    routeName: "userInfo"
+    routeName: "Userinfo"
   },
   {
     title: "SOS",
@@ -43,10 +41,7 @@ const MainItems = [
 ];
 
 export default function HomeScreen() {
-  const handleButtonPress = (routeName) => {
-    navigation.navigate(routeName);
-  };
-
+ 
   return (
     <SafeAreaView style={styles.container}>
       <Text style={styles.branding}>Sentinel</Text>
@@ -55,7 +50,7 @@ export default function HomeScreen() {
           <TouchableOpacity
             key={item.routeName}
             style={styles.mainItemsContainer}
-            onPress={() => handleButtonPress(item.title)}
+            onPress={() => {}}
           >
             <View style={styles.mainItemsButtons}>
               <Text style={styles.featureTitles}>{item.title}</Text>
@@ -68,7 +63,7 @@ export default function HomeScreen() {
           <TouchableOpacity
             key={item.routeName}
             style={styles.buttonContainer}
-            onPress={() => handleButtonPress(item.routeName)}
+            onPress={() => {}}
           >
             <View style={styles.featureButtons}>
               <Text style={styles.featureTitles}>{item.title}</Text>

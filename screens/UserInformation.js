@@ -11,7 +11,7 @@ import {
 } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 
-const UserInformation = () => {
+export default function UserInformation() {
   const [name, setName] = useState("");
   const [dob, setDob] = useState(null);
   const [height, setHeight] = useState("");
@@ -159,11 +159,7 @@ const UserInformation = () => {
           itemStyle={styles.pickerItem}
           selectedValue={isOrganDonor}
           onValueChange={(value) => setIsOrganDonor(value)}
-        >
-          <Picker.Item label="Unknown" value="unknown" />
-          <Picker.Item label="Yes" value="yes" />
-          <Picker.Item label="No" value="no" />
-        </Picker>
+        />
         <TouchableOpacity
         style={styles.saveButton}
         >
@@ -175,7 +171,7 @@ const UserInformation = () => {
       </ScrollView>
     </SafeAreaView>
   );
-};
+}
 
 const styles = StyleSheet.create({
   scrollContainer: {
@@ -208,5 +204,3 @@ const styles = StyleSheet.create({
     borderRadius: 20
   }
 });
-
-export default UserInformation;

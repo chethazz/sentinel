@@ -46,13 +46,13 @@ export default function LoginScreen() {
               sound.stopAsync();
             }
 
-            return 10; // Reset the timer to 10 seconds when it reaches 0
+            return 15; // Reset the timer to 15 seconds when it reaches 0
           }
           return prevTimer - 1;
         });
       }, 1000);
     } else {
-      setTimer(10); // Reset the timer to 10 seconds when the "Start" button is not pressed
+      setTimer(15); // Reset the timer to 15 seconds when the "Start" button is not pressed
       Vibration.cancel(); // Stop vibration when the timer is stopped
 
       // Stop playing the sound

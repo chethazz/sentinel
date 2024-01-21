@@ -4,6 +4,7 @@ import AppNavigation from './navigation/appNavigation';
 import HomeScreen from './screens/HomeScreen';
 import UserInformation from './screens/UserInformation';
 import CarCrash from './screens/CarCrash';
+import Earthquake from './screens/Earthquake';
 
 // import { NavigationContainer } from '@react-navigation/native';
 // import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
@@ -15,6 +16,6 @@ import CarCrash from './screens/CarCrash';
 
 export default function App() {
   return (
-    <CarCrash />
+    <Earthquake />
   );
 }
