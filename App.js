@@ -5,6 +5,8 @@ import HomeScreen from './screens/HomeScreen';
 import UserInformation from './screens/UserInformation';
 import CarCrash from './screens/CarCrash';
 import Earthquake from './screens/Earthquake';
+import SafetyTips from './screens/SafetyTips';
+import SafetyCheck from './screens/SafetyCheck';
 
 // import { NavigationContainer } from '@react-navigation/native';
 // import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
@@ -14,8 +16,8 @@ import Earthquake from './screens/Earthquake';
 // const Tab = createBottomTabNavigator();
 
 
-export default function App() {
-  return (
-    <Earthquake />
+export default function App() { return (
+    // <HomeScreen />
+    <SafetyCheck />
   );
 }
