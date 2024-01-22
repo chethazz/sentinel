@@ -7,6 +7,8 @@ import CarCrash from './screens/CarCrash';
 import Earthquake from './screens/Earthquake';
 import SafetyTips from './screens/SafetyTips';
 import SafetyCheck from './screens/SafetyCheck';
+import EmergencyContacts from './screens/EmergencyContacts';
+import AddContacts from './screens/AddContacts';
 
 // import { NavigationContainer } from '@react-navigation/native';
 // import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
@@ -18,6 +20,6 @@ import SafetyCheck from './screens/SafetyCheck';
 
 export default function App() { return (
     // <HomeScreen />
-    <SafetyCheck />
+    <AddContacts />
   );
 }
