@@ -63,7 +63,7 @@ export default function HomeScreen() {
             >
               <View style={styles.featureButtons}>
                 <View style={styles.iconContainer}>
-                <Image source={item.icon} style={styles.icon} />
+                  <Image source={item.icon} style={styles.icon} />
                 </View>
                 <Text style={styles.featureTitles}>{item.title}</Text>
               </View>
@@ -111,11 +111,9 @@ const styles = StyleSheet.create({
   },
   mainItemsContainer: {
     flex: 1,
-    marginLeft: 10,
-    marginRight: 10,
+    marginHorizontal: 10,
   },
   mainItemsButtons: {
-    padding: 20,
     backgroundColor: "rgb(255, 150, 150)",
     justifyContent: "center",
     alignItems: "center",
@@ -144,7 +142,7 @@ const styles = StyleSheet.create({
   },
   iconContainer: {
     borderWidth: 1,
-    borderColor: 'black',
+    borderColor: "black",
     padding: 3,
     borderRadius: 6,
     marginRight: 10,
@@ -152,7 +150,6 @@ const styles = StyleSheet.create({
   icon: {
     width: 26,
     height: 26,
-
   },
   featureContainer: {
     justifyContent: "space-between",

@@ -1,20 +1,25 @@
-import React, { useState, useEffect } from 'react';
-import { StyleSheet, Text, FlatList, TouchableOpacity, View, TextInput, Dimensions } from 'react-native';
-import * as Contacts from 'expo-contacts';
-import { SafeAreaView } from 'react-native-safe-area-context';
-
+import React, { useState, useEffect } from "react";
+import {
+  StyleSheet,
+  Text,
+  FlatList,
+  TouchableOpacity,
+  View,
+  TextInput,
+  Dimensions,
+} from "react-native";
+import * as Contacts from "expo-contacts";
+import { SafeAreaView } from "react-native-safe-area-context";
 
 const PhoneNumberItem = React.memo(({ item: phoneNumber }) => (
-    <View style={styles.phoneNumberContainer}>
-      <Text style={styles.phoneNumberLabel}>{phoneNumber.label}</Text>
-      
-        <Text style={styles.phoneNumber}>{phoneNumber.number}</Text>
-        <TouchableOpacity style={styles.addButton} onPress={() => handleAddContact(phoneNumber.number)}>
-          <Text style={styles.addButtonText}>Add</Text>
-        </TouchableOpacity>
-      
-    </View>
-  ));
+  <View style={styles.phoneNumberContainer}>
+    <Text style={styles.phoneNumber}>{phoneNumber.number}</Text>
+    <TouchableOpacity onPress={() => {}}>
+      <Text style={styles.addButtonText}>Add</Text>
+    </TouchableOpacity>
+  </View>
+)); //add contacts
+
 const ContactItem = React.memo(({ item }) => (
   <TouchableOpacity style={styles.contactItem}>
     <Text style={styles.contactName}>{item.name}</Text>
@@ -22,7 +27,9 @@ const ContactItem = React.memo(({ item }) => (
       <FlatList
         data={item.phoneNumbers}
         keyExtractor={(phoneNumber) => phoneNumber.id}
-        renderItem={({ item: phoneNumber }) => <PhoneNumberItem item={phoneNumber} />}
+        renderItem={({ item: phoneNumber }) => (
+          <PhoneNumberItem item={phoneNumber} />
+        )}
       />
     )}
   </TouchableOpacity>
@@ -30,7 +37,7 @@ const ContactItem = React.memo(({ item }) => (
 
 export default function AddContacts() {
   const [contacts, setContacts] = useState([]);
-  const [searchQuery, setSearchQuery] = useState('');
+  const [searchQuery, setSearchQuery] = useState("");
 
   useEffect(() => {
     loadContacts();
@@ -39,25 +46,29 @@ export default function AddContacts() {
   const loadContacts = async () => {
     const { status } = await Contacts.requestPermissionsAsync();
 
-    if (status === 'granted') {
+    if (status === "granted") {
       const { data } = await Contacts.getContactsAsync({});
 
       // Filter out contacts without phone numbers
-      const contactsWithNumbers = data.filter((contact) => contact.phoneNumbers && contact.phoneNumbers.length > 0);
+      const contactsWithNumbers = data.filter(
+        (contact) => contact.phoneNumbers && contact.phoneNumbers.length > 0
+      );
 
       // Sort contacts alphabetically
-      const sortedContacts = contactsWithNumbers.sort((a, b) => a.name.localeCompare(b.name));
+      const sortedContacts = contactsWithNumbers.sort((a, b) =>
+        a.name.localeCompare(b.name)
+      );
 
       setContacts(sortedContacts);
     } else {
-      console.log('Contacts permission denied');
+      console.log("Contacts permission denied");
     }
   };
 
   const handleSearch = (query) => {
     setSearchQuery(query);
   };
-  
+
   const filteredContacts = () => {
     return contacts.filter(
       (contact) =>
@@ -135,40 +146,45 @@ const styles = StyleSheet.create({
   },
   searchInput: {
     height: 40,
-    borderColor: 'gray',
-    borderWidth: 1,
     marginBottom: 10,
+    backgroundColor: "rgb( 230, 230, 230 )",
     paddingHorizontal: 10,
+    fontSize: 16,
+    height: 50,
+    borderRadius: 10,
   },
   contactItem: {
-    padding: 10,
-    borderBottomWidth: 1,
-    borderBottomColor: '#ccc',
+    paddingHorizontal: 20,
+    paddingVertical: 15,
+    marginVertical: 5,
+    borderRadius: 10,
+    backgroundColor: "rgb(235, 235, 235)",
   },
   contactName: {
     fontSize: 18,
-    fontWeight: 'bold',
+    fontWeight: "bold",
   },
   phoneNumberContainer: {
-    flexDirection: 'row',
-    marginTop: 5,
-  },
-  phoneNumberLabel: {
-    marginRight: 5,
-    fontSize: 16,
-    color: '#555',
+    flexDirection: "row",
+    marginVertical: 5,
+
+    alignItems: "center",
   },
   phoneNumber: {
     fontSize: 16,
     flex: 1,
-    color: '#333',
+    color: "#333",
   },
   groupTitle: {
-    fontSize: 20,
-    fontWeight: 'bold',
+    fontSize: 25,
+    fontWeight: "bold",
     marginTop: 10,
   },
   addButtonText: {
-    fontSize: 16,
-  }
+    fontSize: 14,
+    padding: 6,
+    color: "rgb(100,100,100)",
+    backgroundColor: "rgb(215, 215, 215)",
+    borderRadius: 10,
+  },
 });

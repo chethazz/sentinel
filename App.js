@@ -19,7 +19,7 @@ import AddContacts from './screens/AddContacts';
 
 
 export default function App() { return (
-    <HomeScreen />
-    // <AddContacts />
+    // <HomeScreen />
+    <AddContacts />
   );
 }
