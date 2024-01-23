@@ -4,7 +4,7 @@ import {
   View,
   Dimensions,
   TouchableOpacity,
-  Image, // Import Image component
+  Image,
 } from "react-native";
 import React from "react";
 import { SafeAreaView } from "react-native-safe-area-context";
@@ -132,17 +132,17 @@ const styles = StyleSheet.create({
     paddingVertical: 30,
     borderRadius: 20,
     backgroundColor: "rgb(225, 225, 225)",
-    flexDirection: "row", // Add this line to align image and text horizontally
-    alignItems: "center", // Add this line to align image and text vertically
+    flexDirection: "row",
+    alignItems: "center",
   },
   featureTitles: {
     fontSize: 16,
     fontWeight: "700",
-    marginLeft: 10, // Add margin to create space between icon and text
+    marginLeft: 10,
   },
   icon: {
-    width: 26, // Adjust the width of the icon as needed
-    height: 26, // Adjust the height of the icon as needed
+    width: 26,
+    height: 26,
   },
   featureContainer: {
     justifyContent: "space-between",

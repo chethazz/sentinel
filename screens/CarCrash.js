@@ -25,7 +25,6 @@ export default function LoginScreen() {
       );
       setSound(sound);
 
-      // Play the sound in a loop
       sound.setIsLoopingAsync(true);
       await sound.playAsync();
     }
