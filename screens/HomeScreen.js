@@ -116,7 +116,7 @@ const styles = StyleSheet.create({
   },
   mainItemsButtons: {
     padding: 20,
-    backgroundColor: "rgb(255, 138, 138)",
+    backgroundColor: "rgb(255, 150, 150)",
     justifyContent: "center",
     alignItems: "center",
     display: "flex",
@@ -133,7 +133,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: 25,
     paddingVertical: 25,
     borderRadius: 20,
-    backgroundColor: "rgb(225, 225, 225)",
+    backgroundColor: "rgb(235, 235, 235)",
     flexDirection: "row",
     alignItems: "center",
   },
@@ -146,7 +146,7 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     borderColor: 'black',
     padding: 3,
-    borderRadius: 5,
+    borderRadius: 6,
     marginRight: 10,
   },
   icon: {
