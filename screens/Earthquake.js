@@ -30,7 +30,7 @@ const styles = StyleSheet.create({
   container: {
     justifyContent: 'space-between',
     alignContent: 'center',
-    alignItems: 'center
+    alignItems: 'center'
   },
   earthquakeImage: {
     width: Dimensions.get("screen").width/1.1,

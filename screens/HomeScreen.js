@@ -62,7 +62,9 @@ export default function HomeScreen() {
               onPress={() => {}}
             >
               <View style={styles.featureButtons}>
+                <View style={styles.iconContainer}>
                 <Image source={item.icon} style={styles.icon} />
+                </View>
                 <Text style={styles.featureTitles}>{item.title}</Text>
               </View>
             </TouchableOpacity>
@@ -129,20 +131,28 @@ const styles = StyleSheet.create({
   },
   featureButtons: {
     paddingHorizontal: 25,
-    paddingVertical: 30,
+    paddingVertical: 25,
     borderRadius: 20,
     backgroundColor: "rgb(225, 225, 225)",
     flexDirection: "row",
     alignItems: "center",
   },
   featureTitles: {
-    fontSize: 16,
+    fontSize: 18,
     fontWeight: "700",
     marginLeft: 10,
+  },
+  iconContainer: {
+    borderWidth: 1,
+    borderColor: 'black',
+    padding: 3,
+    borderRadius: 5,
+    marginRight: 10,
   },
   icon: {
     width: 26,
     height: 26,
+
   },
   featureContainer: {
     justifyContent: "space-between",
