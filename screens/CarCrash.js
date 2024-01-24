@@ -37,7 +37,7 @@ export default function LoginScreen() {
         setTimer((prevTimer) => {
           if (prevTimer === 0) {
             clearInterval(interval);
-            Vibration.cancel(); 
+            Vibration.cancel();
             setIsTimerRunning(false);
 
             // Stop playing the sound

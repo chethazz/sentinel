@@ -53,8 +53,11 @@ export default function HomeScreen() {
   return (
     <SafeAreaView style={styles.container}>
       <View style={styles.header}>
-      <Text style={styles.branding}>Sentinel</Text>
-      <Image source={require("../assets/icons/ec.png")} style={styles.contacts} />
+        <Text style={styles.branding}>Sentinel</Text>
+        <Image
+          source={require("../assets/icons/ec.png")}
+          style={styles.contacts}
+        />
       </View>
       <View style={styles.featureContainer}>
         <View style={styles.listItems}>
@@ -96,13 +99,13 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     paddingHorizontal: 10,
-    paddingTop: 20,
+    padding: 20,
   },
   header: {
     marginHorizontal: 10,
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    alignItems: 'center',
+    flexDirection: "row",
+    justifyContent: "space-between",
+    alignItems: "center",
   },
   contacts: {
     height: 34,
@@ -118,7 +121,7 @@ const styles = StyleSheet.create({
     marginTop: 20,
   },
   listItems: {
-    marginTop: 40,
+    marginTop: 20,
     marginHorizontal: 10,
   },
   mainItemsContainer: {

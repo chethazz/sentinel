@@ -1,17 +1,19 @@
-import React from 'react';
-import { StyleSheet, Text, TouchableOpacity } from 'react-native';
-import { SafeAreaView } from 'react-native-safe-area-context';
-import { MaterialIcons } from '@expo/vector-icons';
+import React from "react";
+import { StyleSheet, Text, TouchableOpacity } from "react-native";
+import { SafeAreaView } from "react-native-safe-area-context";
+import { MaterialIcons } from "@expo/vector-icons";
 
 export default function EmergencyContacts() {
   const handleAddContact = () => {
-    //route 
+    //route
   };
 
   return (
     <SafeAreaView style={styles.container}>
       <Text style={styles.title}>Emergency Contacts</Text>
-      <Text style={styles.infoText}>You can add up to 5 emergency contacts here</Text>
+      <Text style={styles.infoText}>
+        You can add up to 5 emergency contacts here
+      </Text>
       <TouchableOpacity style={styles.fab} onPress={handleAddContact}>
         <MaterialIcons name="add" size={30} color="white" />
       </TouchableOpacity>
@@ -33,15 +35,15 @@ const styles = StyleSheet.create({
     marginTop: 20,
   },
   fab: {
-    position: 'absolute',
+    position: "absolute",
     bottom: 20,
     right: 20,
-    backgroundColor: 'green',
+    backgroundColor: "green",
     borderRadius: 15,
     width: 60,
     height: 60,
-    alignItems: 'center',
-    justifyContent: 'center',
-    backgroundColor: 'black'
+    alignItems: "center",
+    justifyContent: "center",
+    backgroundColor: "black",
   },
 });
