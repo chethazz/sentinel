@@ -52,7 +52,10 @@ const MainItems = [
 export default function HomeScreen() {
   return (
     <SafeAreaView style={styles.container}>
+      <View style={styles.header}>
       <Text style={styles.branding}>Sentinel</Text>
+      <Image source={require("../assets/icons/ec.png")} style={styles.contacts} />
+      </View>
       <View style={styles.featureContainer}>
         <View style={styles.listItems}>
           {DATA.map((item) => (
@@ -95,10 +98,19 @@ const styles = StyleSheet.create({
     paddingHorizontal: 10,
     paddingTop: 20,
   },
+  header: {
+    marginHorizontal: 10,
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+  },
+  contacts: {
+    height: 34,
+    width: 34,
+  },
   branding: {
     fontSize: 35,
     fontWeight: "800",
-    marginHorizontal: 10,
   },
   mainItems: {
     flexDirection: "row",

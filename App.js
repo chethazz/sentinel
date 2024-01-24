@@ -9,6 +9,7 @@ import SafetyTips from './screens/SafetyTips';
 import SafetyCheck from './screens/SafetyCheck';
 import EmergencyContacts from './screens/EmergencyContacts';
 import AddContacts from './screens/AddContacts';
+import NearbyHospitals from './screens/NearbyHospitals';
 
 // import { NavigationContainer } from '@react-navigation/native';
 // import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
@@ -19,7 +20,7 @@ import AddContacts from './screens/AddContacts';
 
 
 export default function App() { return (
-    // <HomeScreen />
-    <AddContacts />
+    <NearbyHospitals />
+    // <AddContacts />
   );
 }
