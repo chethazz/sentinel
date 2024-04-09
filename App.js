@@ -10,7 +10,8 @@ import SafetyCheck from "./screens/SafetyCheck";
 import EmergencyContacts from "./screens/EmergencyContacts";
 import AddContacts from "./screens/AddContacts";
 import NearbyHospitals from "./screens/NearbyHospitals";
-
+import { NavigationContainer } from "@react-navigation/native";
+import { AppNavigator } from "./AppNavigator";
 // import { NavigationContainer } from '@react-navigation/native';
 // import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 // import HomeScreen from './screens/HomeScreen';
@@ -18,9 +19,11 @@ import NearbyHospitals from "./screens/NearbyHospitals";
 
 // const Tab = createBottomTabNavigator();
 
-export default function App() {
-  return (
-    <HomeScreen />
-    // <AddContacts />
-  );
-}
+// export default function App() {
+//   return (
+//     // <HomeScreen />
+//     // <AddContacts />
+//     // <AppNavigation />
+//   );
+// }
+

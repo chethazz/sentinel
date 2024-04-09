@@ -14,14 +14,6 @@ export default function SignUpScreen() {
       style={{ backgroundColor: themeColors.bg }}
     >
       <SafeAreaView className="flex">
-        <View className="flex-row justify-start">
-          <TouchableOpacity
-            onPress={() => navigation.goBack()}
-            className="bg-yellow-400 p-2 rounded-tr-2xl rounded-bl-2xl ml-4"
-          >
-            <ArrowLeftIcon size="20" color="black" />
-          </TouchableOpacity>
-        </View>
         <View className="flex-row justify-center">
           <Image
             source={require("../assets/images/signup.png")}

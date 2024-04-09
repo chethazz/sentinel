@@ -9,6 +9,7 @@ import {
 import React from "react";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { useNavigation } from "@react-navigation/native";
+import { Link, router } from "expo-router";
 
 const DATA = [
   {
@@ -41,7 +42,7 @@ const DATA = [
 const MainItems = [
   {
     title: "Your Information",
-    routeName: "Userinfo",
+    routeName: "UserInfo",
   },
   {
     title: "SOS",
@@ -54,10 +55,12 @@ export default function HomeScreen() {
     <SafeAreaView style={styles.container}>
       <View style={styles.header}>
         <Text style={styles.branding}>Sentinel</Text>
+        <Link href="contact">
         <Image
           source={require("../assets/icons/ec.png")}
           style={styles.contacts}
         />
+        </Link>
       </View>
       <View style={styles.featureContainer}>
         <View style={styles.listItems}>
@@ -65,7 +68,7 @@ export default function HomeScreen() {
             <TouchableOpacity
               key={item.routeName}
               style={styles.buttonContainer}
-              onPress={() => {}}
+              onPress={() => router.push(item?.routeName)}
             >
               <View style={styles.featureButtons}>
                 <View style={styles.iconContainer}>
@@ -82,7 +85,7 @@ export default function HomeScreen() {
             <TouchableOpacity
               key={item.routeName}
               style={styles.mainItemsContainer}
-              onPress={() => {}}
+              onPress={() => router.push(`main/${item?.routeName}`)}
             >
               <View style={styles.mainItemsButtons}>
                 <Text style={styles.featureTitles}>{item.title}</Text>
@@ -99,13 +102,11 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     paddingHorizontal: 10,
-    padding: 20,
   },
   header: {
-    marginHorizontal: 10,
+    marginHorizontal:10,
     flexDirection: "row",
     justifyContent: "space-between",
-    alignItems: "center",
   },
   contacts: {
     height: 34,
@@ -118,10 +119,10 @@ const styles = StyleSheet.create({
   mainItems: {
     flexDirection: "row",
     justifyContent: "space-between",
-    marginTop: 20,
+    marginTop:0,
   },
   listItems: {
-    marginTop: 20,
+    marginTop: 10,
     marginHorizontal: 10,
   },
   mainItemsContainer: {
@@ -129,7 +130,7 @@ const styles = StyleSheet.create({
     marginHorizontal: 10,
   },
   mainItemsButtons: {
-    backgroundColor: "rgb(255, 150, 150)",
+    backgroundColor: "#FCD5CE",
     justifyContent: "center",
     alignItems: "center",
     display: "flex",
@@ -140,7 +141,7 @@ const styles = StyleSheet.create({
   buttonContainer: {
     alignContent: "center",
     justifyContent: "space-between",
-    marginBottom: 20,
+    marginBottom: 10,
   },
   featureButtons: {
     paddingHorizontal: 25,

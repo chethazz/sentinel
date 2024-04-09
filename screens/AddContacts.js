@@ -51,9 +51,9 @@ export default function AddContacts() {
 
       // Filter out contacts without phone numbers
       const contactsWithNumbers = data.filter(
-        (contact) => contact.phoneNumbers && contact.phoneNumbers.length > 0
+        (contact) => contact.phoneNumbers && contact.phoneNumbers.length > 0 
       );
-
+        
       // Sort contacts alphabetically
       const sortedContacts = contactsWithNumbers.sort((a, b) =>
         a.name.localeCompare(b.name)

@@ -1,26 +1,32 @@
 import { View, Text, TouchableOpacity, Image, TextInput } from "react-native";
-import React from "react";
+import React, { useState } from "react"; // Import useState for login state
 import { SafeAreaView } from "react-native-safe-area-context";
 import { ArrowLeftIcon } from "react-native-heroicons/solid";
 import { themeColors } from "../theme";
-import { useNavigation } from "@react-navigation/native";
+import { Link, router } from "expo-router";
+
+// Import Redux or your preferred state management library
 
 export default function LoginScreen() {
-  const navigation = useNavigation();
+  const [isLoggedIn, setIsLoggedIn] = useState(false); // Login state
+
+  const handleLogin = () => {
+    // Implement your login logic here (e.g., API call, authentication)
+    // Assuming successful login, update the state
+    setIsLoggedIn(true);
+
+    // **Navigate to Home Screen using router.push if successful:**
+    if (isLoggedIn) {
+      router.push("/home"); // Assuming your Home Screen route is "/"
+    }
+  };
+
   return (
     <View
       className="flex-1 bg-white"
       style={{ backgroundColor: themeColors.bg }}
     >
       <SafeAreaView className="flex ">
-        <View className="flex-row justify-start">
-          <TouchableOpacity
-            onPress={() => navigation.goBack()}
-            className="bg-yellow-400 p-2 rounded-tr-2xl rounded-bl-2xl ml-4"
-          >
-            <ArrowLeftIcon size="20" color="black" />
-          </TouchableOpacity>
-        </View>
         <View className="flex-row justify-center">
           <Image
             source={require("../assets/images/login.png")}
@@ -49,7 +55,10 @@ export default function LoginScreen() {
           <TouchableOpacity className="flex items-end">
             <Text className="text-gray-700 mb-5">Forgot Password?</Text>
           </TouchableOpacity>
-          <TouchableOpacity className="py-3 bg-yellow-400 rounded-xl">
+          <TouchableOpacity
+            onPress={handleLogin}
+            className="py-3 bg-yellow-400 rounded-xl"
+          >
             <Text className="text-xl font-bold text-center text-gray-700">
               Login
             </Text>
@@ -82,9 +91,9 @@ export default function LoginScreen() {
           <Text className="text-gray-500 font-semibold">
             Don't have an account?
           </Text>
-          <TouchableOpacity onPress={() => navigation.navigate("SignUp")}>
+          <Link href="/signup">
             <Text className="font-semibold text-yellow-500"> Sign Up</Text>
-          </TouchableOpacity>
+          </Link>
         </View>
       </View>
     </View>

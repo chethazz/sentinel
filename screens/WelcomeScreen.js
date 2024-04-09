@@ -3,6 +3,7 @@ import React from "react";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { themeColors } from "../theme";
 import { useNavigation } from "@react-navigation/native";
+import { Link  , router} from "expo-router";
 
 export default function WelcomeScreen() {
   const navigation = useNavigation();
@@ -23,7 +24,7 @@ export default function WelcomeScreen() {
         </View>
         <View className="space-y-4">
           <TouchableOpacity
-            onPress={() => navigation.navigate("SignUp")}
+            onPress={() => router.push("signup")}
             className="py-3 bg-yellow-400 mx-7 rounded-xl"
           >
             <Text className="text-xl font-bold text-center text-gray-700">
@@ -34,7 +35,7 @@ export default function WelcomeScreen() {
             <Text className="text-white font-semibold">
               Already have an account?
             </Text>
-            <TouchableOpacity onPress={() => navigation.navigate("Login")}>
+            <TouchableOpacity onPress={() => router.push("login")}>
               <Text className="font-semibold text-yellow-400"> Log In</Text>
             </TouchableOpacity>
           </View>
