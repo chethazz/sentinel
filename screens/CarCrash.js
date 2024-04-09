@@ -10,8 +10,9 @@ import React, { useState, useEffect } from "react";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { StyleSheet } from "react-native";
 import { Audio } from "expo-av";
+import { Accelerometer } from "expo-sensors";
 
-export default function LoginScreen() {
+export default function CarCrash() {
   const [timer, setTimer] = useState(60);
   const [isTimerRunning, setIsTimerRunning] = useState(false);
   const [sound, setSound] = useState();
@@ -74,6 +75,26 @@ export default function LoginScreen() {
   const handleStartStop = () => {
     setIsTimerRunning((prevIsTimerRunning) => !prevIsTimerRunning);
   };
+
+  useEffect(() => {
+    const tiltThreshold = 2;
+
+    const subscription = Accelerometer.addListener((accelerometerData) => {
+      const { x } = accelerometerData;
+
+      // Check if the phone is tilted to the left or right
+      if (x < -tiltThreshold || x > tiltThreshold || y > -tiltThreshold || y > tiltThreshold || z > -tiltThreshold || z > tiltThreshold) {
+        // Start the timer if not already running
+        if (!isTimerRunning) {
+          handleStartStop();
+        }
+      }
+    });
+
+    return () => {
+      subscription.remove();
+    };
+  }, [isTimerRunning]);
 
   return (
     <SafeAreaView>
@@ -156,6 +177,14 @@ const styles = StyleSheet.create({
   button: {
     fontSize: 18,
     textAlign: "center",
+    color: "black",
+  },
+  tiltDetectionContainer: {
+    alignItems: "center",
+    marginTop: 20,
+  },
+  tiltDetectionText: {
+    fontSize: 16,
     color: "black",
   },
 });
