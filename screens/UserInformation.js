@@ -43,6 +43,7 @@ export default function UserInformation() {
   return (
     <SafeAreaView>
       <ScrollView contentContainerStyle={styles.scrollContainer}>
+      <Text style={styles.title}>Your Information</Text>
         <View style={styles.container}>
           <Text>Name:</Text>
           <TextInput
@@ -187,6 +188,11 @@ const styles = StyleSheet.create({
   scrollContainer: {
     flexGrow: 1,
   },
+  title: {
+    fontSize: 35,
+    fontWeight: "bold",
+    paddingHorizontal: 20,
+  },
   container: {
     padding: 10,
     marginHorizontal: 10,
@@ -194,11 +200,11 @@ const styles = StyleSheet.create({
   },
   input: {
     marginTop: 10,
-    borderWidth: 1,
     borderColor: "gray",
     borderRadius: 10,
-    padding: 8,
+    padding: 13,
     marginBottom: 10,
+    backgroundColor: "#D6D6D6"
   },
   largeInput: {
     height: 100
@@ -210,7 +216,7 @@ const styles = StyleSheet.create({
     color: "black",
   },
   saveButton: {
-    backgroundColor: "skyblue",
+    backgroundColor: ".#F8BCBC",
     justifyContent: "center",
     alignItems: "center",
     padding: 20,
