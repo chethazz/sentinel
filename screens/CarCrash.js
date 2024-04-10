@@ -80,10 +80,10 @@ export default function CarCrash() {
     const tiltThreshold = 2;
 
     const subscription = Accelerometer.addListener((accelerometerData) => {
-      const { x } = accelerometerData;
+      const { x, y, z } = accelerometerData;
 
       // Check if the phone is tilted to the left or right
-      if (x < -tiltThreshold || x > tiltThreshold || y > -tiltThreshold || y > tiltThreshold || z > -tiltThreshold || z > tiltThreshold) {
+      if (x < -tiltThreshold || x > tiltThreshold || y < -tiltThreshold || y > tiltThreshold || z < -tiltThreshold || z > tiltThreshold) {
         // Start the timer if not already running
         if (!isTimerRunning) {
           handleStartStop();
