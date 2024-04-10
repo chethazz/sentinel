@@ -5,18 +5,18 @@ import { Stack } from "expo-router";
 const RootLayout = () => {
   return (
    <Stack>
-    <Stack.Screen name="index" options={{headerTitle:"Welcome to Sentinel"}} />
-    <Stack.Screen name="home"  options={{headerTitle:"Sentinel"}}/>
-    <Stack.Screen name="login/index" options={{headerTitle:"Login page"}} />
-    <Stack.Screen name="signup/index" options={{headerTitle:"Signup page"}} />
-    <Stack.Screen name="contact/index" options={{headerTitle:"Contacts page "}} />
-    <Stack.Screen name="CarCrash/index" options={{headerTitle:"Car Crash Detection page "}} />
-    <Stack.Screen name="EarthquakeAlerts/index" options={{headerTitle:"Earthquak Alerts page "}} />
-    <Stack.Screen name="NearbyHospitals/index" options={{headerTitle:"Nearby Hospitals page "}} />
-    <Stack.Screen name="SafetyTips/index" options={{headerTitle:"Safety Tips page "}} />
-    <Stack.Screen name="SafetyCheck/index" options={{headerTitle:"Safety Check page "}} />
-    <Stack.Screen name="main/UserInfo/index" options={{headerTitle:"User Information page "}} />
-    <Stack.Screen name="main/SOS/index" options={{headerTitle:"SOS page "}} />
+    <Stack.Screen name="index" options={{ headerShown: false }}/>
+    <Stack.Screen name="home"  options={{ headerShown: false }}/>
+    <Stack.Screen name="login/index" options={{ headerShown: false }} />
+    <Stack.Screen name="signup/index" options={{ headerShown: false }} />
+    <Stack.Screen name="contact/index" options={{ headerShown: false }} />
+    <Stack.Screen name="CarCrash/index" options={{ headerShown: false }} />
+    <Stack.Screen name="EarthquakeAlerts/index" options={{ headerShown: false }} />
+    <Stack.Screen name="NearbyHospitals/index" options={{ headerShown: false }} />
+    <Stack.Screen name="SafetyTips/index" options={{ headerShown: false }} />
+    <Stack.Screen name="SafetyCheck/index" options={{ headerShown: false }} />
+    <Stack.Screen name="main/UserInfo/index" options={{ headerShown: false }} />
+    <Stack.Screen name="main/SOS/index" options={{ headerShown: false }} />
    </Stack>
   );
 };
