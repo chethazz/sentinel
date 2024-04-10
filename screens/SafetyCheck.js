@@ -155,7 +155,7 @@ const styles = StyleSheet.create({
     marginVertical: 10,
   },
   button: {
-    backgroundColor: "red",
+    backgroundColor: "#FDA0A0",
     borderRadius: 20,
     paddingVertical: 16,
     alignItems: "center",
@@ -163,7 +163,7 @@ const styles = StyleSheet.create({
   },
   buttonText: {
     fontSize: 20,
-    color: "white",
+
   },
   countdownContainer: {
     justifyContent: "center",

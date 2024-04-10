@@ -216,7 +216,7 @@ const styles = StyleSheet.create({
     color: "black",
   },
   saveButton: {
-    backgroundColor: ".#F8BCBC",
+    backgroundColor: "#F8BCBC",
     justifyContent: "center",
     alignItems: "center",
     padding: 20,
