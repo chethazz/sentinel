@@ -1,5 +1,5 @@
 import React from "react";
-import { ScrollView, StyleSheet, Text } from "react-native";
+import { ScrollView, StyleSheet, Text, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 
 const sampleTips = [
@@ -70,10 +70,12 @@ export default function SafetyTips() {
         <Text style={styles.title}>Safety Tips</Text>
         {sampleTips.map((category, index) => (
           <React.Fragment key={index}>
-            <Text style={styles.heading}>{category.category}</Text>
-            {category.tips.map((tip, tipIndex) => (
-              <Text key={tipIndex} style={styles.tip}>{`- ${tip}`}</Text>
-            ))}
+            <View style={styles.tipContainer}>
+              <Text style={styles.heading}>{category.category}</Text>
+              {category.tips.map((tip, tipIndex) => (
+                <Text key={tipIndex} style={styles.tip}>{`- ${tip}`}</Text>
+              ))}
+            </View>
           </React.Fragment>
         ))}
       </ScrollView>
@@ -85,13 +87,19 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     padding: 20,
+    paddingBottom: 0
   },
   title: {
     fontSize: 35,
     fontWeight: "bold",
   },
+  tipContainer: {
+    backgroundColor: "#DCDCDC",
+    marginVertical: 10,
+    padding: 15,
+    borderRadius: 12,
+  },
   heading: {
-    paddingTop: 20,
     fontSize: 20,
     fontWeight: "bold",
     marginBottom: 8,
