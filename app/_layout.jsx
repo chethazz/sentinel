@@ -5,8 +5,8 @@ import { Stack } from "expo-router";
 const RootLayout = () => {
   return (
    <Stack>
-    <Stack.Screen name="index" options={{headerTitle:"Welcome to Sentinal"}} />
-    <Stack.Screen name="home"  options={{headerTitle:"Sentinal"}}/>
+    <Stack.Screen name="index" options={{headerTitle:"Welcome to Sentinel"}} />
+    <Stack.Screen name="home"  options={{headerTitle:"Sentinel"}}/>
     <Stack.Screen name="login/index" options={{headerTitle:"Login page"}} />
     <Stack.Screen name="signup/index" options={{headerTitle:"Signup page"}} />
     <Stack.Screen name="contact/index" options={{headerTitle:"Contacts page "}} />
