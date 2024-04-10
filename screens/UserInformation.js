@@ -109,14 +109,13 @@ export default function UserInformation() {
             style={styles.picker}
             itemStyle={styles.pickerItem}
             selectedValue={isPregnant}
-            onValueChange={(value) => setIsPregnant(value)}
+            onValueChange={()=> {}}
           >
-            <Picker.Item label="Unknown" value="unknown" />
-            <Picker.Item label="Pregnant" value="pregnant" />
             <Picker.Item label="Not Pregnant" value="notPregnant" />
+            <Picker.Item label="Pregnant" value="pregnant" />
           </Picker>
 
-          {isPregnant === "pregnant" && (
+          {/* {isPregnant === "pregnant" && (
             <>
               <Text>Due Date:</Text>
               <TouchableOpacity
@@ -127,7 +126,7 @@ export default function UserInformation() {
                 </Text>
               </TouchableOpacity>
             </>
-          )}
+          )} */}
 
           <Text>Medication Notes:</Text>
           <TextInput
@@ -157,9 +156,13 @@ export default function UserInformation() {
           <Picker
             style={styles.picker}
             itemStyle={styles.pickerItem}
-            selectedValue={isOrganDonor}
-            onValueChange={(value) => setIsOrganDonor(value)}
-          />
+            selectedValue={isPregnant}
+            onValueChange={()=> {}}
+          >
+            <Picker.Item label="No" value="false" />
+            <Picker.Item label="Yes" value="true" />
+          </Picker>
+
           <TouchableOpacity style={styles.saveButton}>
             <View>
               <Text>Save</Text>
