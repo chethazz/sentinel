@@ -61,6 +61,15 @@ export default function UserInformation() {
             </Text>
           </TouchableOpacity>
 
+          <Text>Gender:</Text>
+          <TextInput
+            style={styles.input}
+            placeholder="Enter your weight"
+            value={weight}
+            onChangeText={(text) => setWeight(text)}
+            keyboardType="numeric"
+          />
+
           <Text>Height (cm):</Text>
           <TextInput
             style={styles.input}
@@ -98,7 +107,7 @@ export default function UserInformation() {
 
           <Text>Allergy Notes:</Text>
           <TextInput
-            style={styles.input}
+            style={[styles.input, styles.largeInput ]}
             placeholder="Enter allergy notes"
             value={allergyNotes}
             onChangeText={(text) => setAllergyNotes(text)}
@@ -130,7 +139,7 @@ export default function UserInformation() {
 
           <Text>Medication Notes:</Text>
           <TextInput
-            style={styles.input}
+            style={[styles.input, styles.largeInput ]}
             placeholder="Enter medication notes"
             value={medicationNotes}
             onChangeText={(text) => setMedicationNotes(text)}
@@ -138,7 +147,7 @@ export default function UserInformation() {
 
           <Text>Residential Address:</Text>
           <TextInput
-            style={styles.input}
+            style={[styles.input, styles.largeInput ]}
             placeholder="Enter residential address"
             value={address}
             onChangeText={(text) => setAddress(text)}
@@ -146,7 +155,7 @@ export default function UserInformation() {
 
           <Text>Medical Notes:</Text>
           <TextInput
-            style={styles.input}
+            style={[styles.input, styles.largeInput ]}
             placeholder="Enter medical notes"
             value={medicalNotes}
             onChangeText={(text) => setMedicalNotes(text)}
@@ -190,6 +199,9 @@ const styles = StyleSheet.create({
     borderRadius: 10,
     padding: 8,
     marginBottom: 10,
+  },
+  largeInput: {
+    height: 100
   },
   picker: {
     backggroundColor: "black",
