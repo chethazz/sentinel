@@ -102,11 +102,13 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     paddingHorizontal: 10,
+    padding: 20,
   },
   header: {
-    marginHorizontal:10,
+    marginHorizontal: 10,
     flexDirection: "row",
     justifyContent: "space-between",
+    alignItems: "center",
   },
   contacts: {
     height: 34,
@@ -119,10 +121,10 @@ const styles = StyleSheet.create({
   mainItems: {
     flexDirection: "row",
     justifyContent: "space-between",
-    marginTop:0,
+    marginTop: 20,
   },
   listItems: {
-    marginTop: 10,
+    marginTop: 20,
     marginHorizontal: 10,
   },
   mainItemsContainer: {
@@ -130,7 +132,7 @@ const styles = StyleSheet.create({
     marginHorizontal: 10,
   },
   mainItemsButtons: {
-    backgroundColor: "#FCD5CE",
+    backgroundColor: "rgb(255, 150, 150)",
     justifyContent: "center",
     alignItems: "center",
     display: "flex",
@@ -141,7 +143,7 @@ const styles = StyleSheet.create({
   buttonContainer: {
     alignContent: "center",
     justifyContent: "space-between",
-    marginBottom: 10,
+    marginBottom: 20,
   },
   featureButtons: {
     paddingHorizontal: 25,
