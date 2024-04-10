@@ -55,12 +55,14 @@ export default function HomeScreen() {
     <SafeAreaView style={styles.container}>
       <View style={styles.header}>
         <Text style={styles.branding}>Sentinel</Text>
-        <Link href="contact">
+        <TouchableOpacity
+        onPress={() => router.push("contact")}
+        >
         <Image
           source={require("../assets/icons/ec.png")}
           style={styles.contacts}
         />
-        </Link>
+        </TouchableOpacity>
       </View>
       <View style={styles.featureContainer}>
         <View style={styles.listItems}>
