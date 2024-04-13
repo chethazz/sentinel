@@ -1,13 +1,65 @@
 import { View, Text, TouchableOpacity, Image, TextInput } from "react-native";
-import React from "react";
+import React, { useState } from "react";
 import { themeColors } from "../theme";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { ArrowLeftIcon } from "react-native-heroicons/solid";
 import { useNavigation } from "@react-navigation/native";
+import { register } from "../axios/axiosConfig";
+import { Link, router } from "expo-router";
 
-// subscribe for more videos like this :)
+    
 export default function SignUpScreen() {
   const navigation = useNavigation();
+  const [username, setFullName] = useState("");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [fullNameError, setFullNameError] = useState("");
+  const [emailError, setEmailError] = useState("");
+  const [passwordError, setPasswordError] = useState("");
+
+  const handleSignup = async() =>{
+    setFullNameError("");
+    setEmailError("");
+    setPasswordError("");
+
+    let isValid = true;
+
+    if (!username.trim()) {
+      setFullNameError("Full Name is required");
+      isValid = false;
+    }
+
+    if (!email.trim()) {
+      setEmailError("Email is required");
+      isValid = false;
+    } else if (!isValidEmail(email)) {
+      setEmailError("Please enter a valid email address");
+      isValid = false;
+    }
+
+    if (!password.trim()) {
+      setPasswordError("Password is required");
+      isValid = false;
+    } else if (password.length < 6) {
+      setPasswordError("Password must be at least 6 characters long");
+      isValid = false;
+    }
+     if (isValid) {
+      try {
+        const response = await register(username, email, password);
+        console.log('Registration successful:', response);
+        alert("Success", "Registration successful");
+        router.push("/login")
+      } catch (error) {
+        console.error('Error registering user:', error);
+        alert("Error", "Failed to register user. Please try again.");
+      }
+    
+    }
+  } 
+  const isValidEmail = (email) => {
+    return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+  };
   return (
     <View
       className="flex-1 bg-gray-300"
@@ -28,24 +80,27 @@ export default function SignUpScreen() {
           <Text className="text-gray-700 ml-4">Full Name</Text>
           <TextInput
             className="p-4 bg-gray-100 text-gray-700 rounded-2xl mb-3"
-            value="john snow"
+            onChangeText={text => setFullName(text)}
             placeholder="Enter Name"
           />
+          <Text style={{ color: 'red', marginBottom: 10 }}>{fullNameError}</Text>
           <Text className="text-gray-700 ml-4">Email Address</Text>
           <TextInput
-            className="p-4 bg-gray-100 text-gray-700 rounded-2xl mb-3"
-            value="john@gmail.com"
+            className="p-4 bg-gray-100 text-gray-700 rounded-2xl mb-3" 
             placeholder="Enter Email"
+            onChangeText={text => setEmail(text)}
           />
+          <Text style={{ color: 'red', marginBottom: 10 }}>{emailError}</Text>
           <Text className="text-gray-700 ml-4">Password</Text>
           <TextInput
             className="p-4 bg-gray-100 text-gray-700 rounded-2xl mb-7"
             secureTextEntry
-            value="test12345"
+            onChangeText={text => setPassword(text)}
             placeholder="Enter Password"
           />
+          <Text style={{ color: 'red', marginBottom: 10 }}>{passwordError}</Text>
           <TouchableOpacity className="py-3 bg-red-300 rounded-xl">
-            <Text className="font-xl font-bold text-center text-gray-700">
+            <Text className="font-xl font-bold text-center text-gray-700" onPress={handleSignup}>
               Sign Up
             </Text>
           </TouchableOpacity>
