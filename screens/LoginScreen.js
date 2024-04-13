@@ -1,31 +1,61 @@
 import { View, Text, TouchableOpacity, Image, TextInput } from "react-native";
-import React, { useState } from "react"; // Import useState for login state
+import React, { useState } from "react";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { ArrowLeftIcon } from "react-native-heroicons/solid";
 import { themeColors } from "../theme";
+import { useDispatch } from "react-redux";
 import { Link, router } from "expo-router";
-
-// Import Redux or your preferred state management library
+import { login } from "../axios/axiosConfig";
+import { setLogin } from "../redux/reducers/auth.slice";
 
 export default function LoginScreen() {
-  const [isLoggedIn, setIsLoggedIn] = useState(false); // Login state
+  const dispatch = useDispatch();
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [emailError, setEmailError] = useState("");
+  const [passwordError, setPasswordError] = useState("");
 
-  const handleLogin = () => {
-    // Implement your login logic here (e.g., API call, authentication)
-    // Assuming successful login, update the state
-    setIsLoggedIn(true);
+  const handleLogin = async () => {
+    setEmailError("");
+    setPasswordError("");
 
-    // **Navigate to Home Screen using router.push if successful:**
-    if (isLoggedIn) {
-      router.push("/home"); // Assuming your Home Screen route is "/"
+    if (!email || !email.trim()) {
+      setEmailError("Email is required");
+      return;
+    }
+
+    if (!password) {
+      setPasswordError("Password is required");
+      return;
+    }
+
+    if (password.length < 8) {
+      setPasswordError("Password must be at least 8 characters long");
+      return;
+    }
+
+    try {
+      const response = await login(email, password);
+      console.log(response);
+      dispatch(
+        setLogin({
+          user: response,
+          isLoggedIn: true,
+          userLocation: {
+            longitude: 0,
+            latitude: 0,
+          },
+        })
+      );
+      router.push("/home");
+    } catch (error) {
+      alert("Invalid email or password. Please try again.");
     }
   };
 
   return (
-    <View
-      className="flex-1 bg-gray-300"
-      
-    >
+    <View className="flex-1 bg-gray-300">
       <SafeAreaView className="flex ">
         <View className="flex-row justify-center">
           <Image
@@ -43,15 +73,23 @@ export default function LoginScreen() {
           <TextInput
             className="p-4 bg-gray-100 text-gray-700 rounded-2xl mb-3"
             placeholder="email"
-            value="john@gmail.com"
+            onChangeText={(text) => setEmail(text)}
           />
+          {emailError ? (
+            <Text style={{ color: "red", marginLeft: 10 }}>{emailError}</Text>
+          ) : null}
           <Text className="text-gray-700 ml-4">Password</Text>
           <TextInput
             className="p-4 bg-gray-100 text-gray-700 rounded-2xl"
             secureTextEntry
             placeholder="password"
-            value="test12345"
+            onChangeText={(text) => setPassword(text)}
           />
+          {passwordError ? (
+            <Text style={{ color: "red", marginLeft: 10 }}>
+              {passwordError}
+            </Text>
+          ) : null}
           <TouchableOpacity className="flex items-end">
             <Text className="text-gray-700 mb-5">Forgot Password?</Text>
           </TouchableOpacity>
