@@ -40,12 +40,10 @@ export default function CarCrash() {
             clearInterval(interval);
             Vibration.cancel();
             setIsTimerRunning(false);
-
             // Stop playing the sound
             if (sound) {
               sound.stopAsync();
             }
-
             return 15; // Reset the timer to 15 seconds when it reaches 0
           }
           return prevTimer - 1;
