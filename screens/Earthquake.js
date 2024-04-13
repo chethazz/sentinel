@@ -30,7 +30,7 @@ const eqSample = [
       {
         title: "M 0.7 - 10km NNE of Banning, LA",
         date: "Sun, 4/17/22, 5:00 am UTC",
-        url: "https://chethas.vercel.app",
+        url: "https://earthquake.usgs.gov/earthquakes/eventpage/ci40238760",
       },
     ],
   },
