@@ -61,13 +61,13 @@ export default function HomeScreen() {
 
   useEffect(() => {
     const tiltThreshold = 2;
-    const detectionDuration = 5000; // 5 seconds
-
+    const detectionDuration = 6000; // 5 seconds
+  
     let detectionTimeout;
-
+  
     const subscription = Accelerometer.addListener((accelerometerData) => {
       const { x, y, z } = accelerometerData;
-
+  
       // Check if the phone is tilted to the left or right
       if (
         !carCrashDetected &&
@@ -80,13 +80,14 @@ export default function HomeScreen() {
       ) {
         setCarCrashDetected(true);
         router.push("CarCrash");
-
+  
         // Set a timeout to reset carCrashDetected after detectionDuration
         detectionTimeout = setTimeout(() => {
           setCarCrashDetected(false);
         }, detectionDuration);
       }
     });
+  
     return () => {
       subscription.remove();
       clearTimeout(detectionTimeout); // Clear the timeout to prevent memory leaks
