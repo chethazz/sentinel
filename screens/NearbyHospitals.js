@@ -20,8 +20,6 @@
 //   },
 // });
 
-
-
 import React, { useEffect, useState } from "react";
 import {
   StyleSheet,
@@ -32,7 +30,7 @@ import {
 } from "react-native";
 import * as Location from "expo-location";
 import MapView, { Marker } from "react-native-maps";
-
+import { SafeAreaView } from "react-native-safe-area-context";
 
 const windowWidth = Dimensions.get("window").width;
 const windowHeight = Dimensions.get("window").height;
@@ -76,7 +74,7 @@ const NearbyHospitals = () => {
       if (data.results && data.results.length > 0) {
         setNearbyHospitals(data.results);
       }
-      console.log('responsee of fetch google map ',response);
+      console.log("responsee of fetch google map ", response);
     } catch (error) {
       console.error("Error fetching nearby hospitals:", error);
     }
@@ -105,63 +103,60 @@ const NearbyHospitals = () => {
   };
 
   return (
-    <View style={styles.container}>
-      <MapView
-        style={styles.map}
-        initialRegion={initialRegion}
-        showsUserLocation
-        showsCompass
-      >
-        {currentLocation && (
-          <Marker
-            coordinate={{
-              latitude: currentLocation.latitude,
-              longitude: currentLocation.longitude,
-            }}
-            title="Your Location"
-          />
+    <SafeAreaView>
+      <View style={styles.container}>
+        <MapView
+          style={styles.map}
+          initialRegion={initialRegion}
+          showsUserLocation
+          showsCompass
+        >
+          {currentLocation && (
+            <Marker
+              coordinate={{
+                latitude: currentLocation.latitude,
+                longitude: currentLocation.longitude,
+              }}
+              title="Your Location"
+            />
+          )}
+
+          {/* Display nearby hospitals */}
+          {nearbyHospitals.map((hospital, index) => (
+            <Marker
+              key={index}
+              coordinate={{
+                latitude: hospital.geometry.location.lat,
+                longitude: hospital.geometry.location.lng,
+              }}
+              title={hospital.name}
+              description={hospital.vicinity}
+              pinColor="red"
+              onPress={() => handleHospitalMarkerPress(hospital)}
+            />
+          ))}
+        </MapView>
+
+        <TouchableOpacity style={styles.button} onPress={fetchNearbyHospitals}>
+          <Text style={styles.buttonText}>Find Nearby Hospitals</Text>
+        </TouchableOpacity>
+
+        {selectedHospital && directions && (
+          <View style={styles.directionsContainer}>
+            <Text>To: {selectedHospital.name}</Text>
+            <Text>Distance: {directions.distance.text}</Text>
+            <Text>Duration: {directions.duration.text}</Text>
+          </View>
         )}
-
-        {/* Display nearby hospitals */}
-        {nearbyHospitals.map((hospital, index) => (
-          <Marker
-            key={index}
-            coordinate={{
-              latitude: hospital.geometry.location.lat,
-              longitude: hospital.geometry.location.lng,
-            }}
-            title={hospital.name}
-            description={hospital.vicinity}
-            pinColor="red"
-            onPress={() => handleHospitalMarkerPress(hospital)}
-          />
-        ))}
-      </MapView>
-
-      <TouchableOpacity style={styles.button} onPress={fetchNearbyHospitals}>
-        <Text style={styles.buttonText}>Find Nearby Hospitals</Text>
-      </TouchableOpacity>
-
-      {selectedHospital && directions && (
-        <View style={styles.directionsContainer}>
-          <Text>To: {selectedHospital.name}</Text>
-          <Text>Distance: {directions.distance.text}</Text>
-          <Text>Duration: {directions.duration.text}</Text>
-        </View>
-      )}
-    </View>
+      </View>
+    </SafeAreaView>
   );
 };
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    alignItems: "center",
-    justifyContent: "center",
-  },
   map: {
     width: "100%",
-    height: "80%",
+    height: "100%",
   },
   button: {
     position: "absolute",
