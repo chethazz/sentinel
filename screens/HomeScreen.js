@@ -9,7 +9,7 @@ import {
 import React, { useEffect, useState } from "react";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { useNavigation } from "@react-navigation/native";
-import { Link, router } from "expo-router";
+import { Link, router, useFocusEffect } from "expo-router"; // Ensure to import useFocusEffect
 import { Accelerometer } from "expo-sensors";
 import CarCrash from "./CarCrash";
 
@@ -55,44 +55,42 @@ const MainItems = [
 export default function HomeScreen() {
   const [carCrashDetected, setCarCrashDetected] = useState(false);
 
-  const updateCarCrashDetected = (value) => {
-    setCarCrashDetected(value);
-  };
+  useFocusEffect(
+    React.useCallback(() => {
+      const tiltThreshold = 2;
+      const detectionDuration = 6000; // 5 seconds
 
-  useEffect(() => {
-    const tiltThreshold = 2;
-    const detectionDuration = 6000; // 5 seconds
-  
-    let detectionTimeout;
-  
-    const subscription = Accelerometer.addListener((accelerometerData) => {
-      const { x, y, z } = accelerometerData;
-  
-      // Check if the phone is tilted to the left or right
-      if (
-        !carCrashDetected &&
-        (x < -tiltThreshold ||
-          x > tiltThreshold ||
-          y < -tiltThreshold ||
-          y > tiltThreshold ||
-          z < -tiltThreshold ||
-          z > tiltThreshold)
-      ) {
-        setCarCrashDetected(true);
-        router.push("CarCrash");
-  
-        // Set a timeout to reset carCrashDetected after detectionDuration
-        detectionTimeout = setTimeout(() => {
-          setCarCrashDetected(false);
-        }, detectionDuration);
-      }
-    });
-  
-    return () => {
-      subscription.remove();
-      clearTimeout(detectionTimeout); // Clear the timeout to prevent memory leaks
-    };
-  }, [carCrashDetected]);
+      let detectionTimeout;
+
+      const subscription = Accelerometer.addListener((accelerometerData) => {
+        const { x, y, z } = accelerometerData;
+
+        // Check if the phone is tilted to the left or right
+        if (
+          !carCrashDetected &&
+          (x < -tiltThreshold ||
+            x > tiltThreshold ||
+            y < -tiltThreshold ||
+            y > tiltThreshold ||
+            z < -tiltThreshold ||
+            z > tiltThreshold)
+        ) {
+          setCarCrashDetected(true);
+          router.push("CarCrash");
+
+          // Set a timeout to reset carCrashDetected after detectionDuration
+          detectionTimeout = setTimeout(() => {
+            setCarCrashDetected(false);
+          }, detectionDuration);
+        }
+      });
+
+      return () => {
+        subscription.remove();
+        clearTimeout(detectionTimeout); // Clear the timeout to prevent memory leaks
+      };
+    }, [carCrashDetected])
+  );
 
   return (
     <SafeAreaView style={styles.container}>
