@@ -1,6 +1,9 @@
 import React, { useState } from "react";
+import { useSelector } from "react-redux";
 import { Picker } from "@react-native-picker/picker";
-import { DateTimePickerAndroid } from "@react-native-community/datetimepicker";
+import { updateProfileReducer } from "../redux/reducers/auth.slice";
+import { editUser } from "../axios/axiosConfig";
+import { useDispatch } from "react-redux";
 import {
   View,
   Text,
@@ -12,38 +15,85 @@ import {
 import { SafeAreaView } from "react-native-safe-area-context";
 
 export default function UserInformation() {
-  const [name, setName] = useState("");
-  const [dob, setDob] = useState(null);
-  const [height, setHeight] = useState("");
-  const [weight, setWeight] = useState("");
-  const [bloodGroup, setBloodGroup] = useState("A+");
-  const [allergyNotes, setAllergyNotes] = useState("");
-  const [isPregnant, setIsPregnant] = useState("unknown");
-  const [dueDate, setDueDate] = useState(null);
-  const [medicationNotes, setMedicationNotes] = useState("");
-  const [address, setAddress] = useState("");
-  const [medicalNotes, setMedicalNotes] = useState("");
-  const [isOrganDonor, setIsOrganDonor] = useState("unknown");
+  const dispatch = useDispatch();
+  const userData = useSelector((state) => state.auth.user);
+  console.log(userData);
+  const [name, setName] = useState(userData?.username || "");
+  const [dob, setDob] = useState(userData?.dob || "");
+  const [gender , setGender] = useState(userData?.gender || "");
+  const [height, setHeight] = useState(userData?.height || "");
+  const [weight, setWeight] = useState(userData?.weight || "");
+  const [bloodGroup, setBloodGroup] = useState(userData?.bloodType || "A+");
+  const [allergyNotes, setAllergyNotes] = useState(
+    userData?.allergies?.join(", ") || ""
+  );
+  const [isPregnant, setIsPregnant] = useState(
+    userData?.isPregnant || false
+  );
+  const [dueDate, setDueDate] = useState(userData?.dueDate || null);
+  const [medicationNotes, setMedicationNotes] = useState(
+    userData?.medication?.join(", ") || ""
+  );
+  const [address, setAddress] = useState(userData?.address || "");
+  const [medicalNotes, setMedicalNotes] = useState(
+    userData?.medicalNotes || ""
+  );
+  const [isOrganDonor, setIsOrganDonor] = useState(
+    userData?.isOrganDonor || false
+  );
 
-  const showDatePicker = async (currentDate, onChange) => {
+
+
+  const handleSave = async () => {
     try {
-      const defaultDate = currentDate || new Date();
-      const { action, year, month, day } = await DateTimePickerAndroid.open({
-        value: defaultDate, // Specify the initial date here
-      });
-
-      if (action !== DateTimePickerAndroid.dismissedAction) {
-        onChange(new Date(year, month, day));
+      if (!name.trim()) {
+        alert("Name is required");
+        return;
       }
-    } catch ({ code, message }) {
-      console.warn("Cannot open date picker", message);
+
+      if (!dob) {
+        alert("Date of Birth is required");
+        return;
+      }
+
+      if (!height.trim() || !weight.trim()) {
+        alert("Height and Weight are required");
+        return;
+      }
+
+      if (isPregnant === "pregnant" && !dueDate) {
+        alert("Due Date is required for pregnant users");
+        return;
+      }
+
+      const updatedUserData = {
+        username: name,
+        dob: dob,
+        gender: gender,
+        height: height,
+        weight: weight,
+        bloodType: bloodGroup,
+        allergies: allergyNotes,
+        isPregnant: isPregnant,
+        dueDate: dueDate,
+        medication: medicationNotes,
+        address: address,
+        medicalNotes: medicalNotes,
+        isOrganDonor: isOrganDonor,
+      };
+      const response = await editUser(userData._id, updatedUserData);
+      dispatch(updateProfileReducer(response));
+      alert("User information updated successfully");
+    } catch (error) {
+      console.error("Error updating user information", error);
+      alert("Error updating user information");
     }
   };
 
   return (
     <SafeAreaView>
       <ScrollView contentContainerStyle={styles.scrollContainer}>
-      <Text style={styles.title}>Your Information</Text>
+        <Text style={styles.title}>Your Information</Text>
         <View style={styles.container}>
           <Text>Name:</Text>
           <TextInput
@@ -54,21 +104,20 @@ export default function UserInformation() {
           />
 
           <Text>Date of Birth:</Text>
-          <TouchableOpacity onPress={() => showDatePicker(dob, setDob)}>
-            <Text style={styles.input}>
-              <Text style={styles.input}>
-                {dob ? dob.toLocaleDateString() : "Select Date of Birth"}
-              </Text>
-            </Text>
-          </TouchableOpacity>
+          <TextInput
+            style={styles.input}
+            placeholder="Enter your weight"
+            value={dob}
+            onChangeText={(text) => setDob(text)}
+            keyboardType="numeric"
+          />
 
           <Text>Gender:</Text>
           <TextInput
             style={styles.input}
-            placeholder="Enter your weight"
-            value={weight}
-            onChangeText={(text) => setWeight(text)}
-            keyboardType="numeric"
+            placeholder="Enter your gender"
+            value={gender}
+            onChangeText={(text) => setGender(text)}
           />
 
           <Text>Height (cm):</Text>
@@ -108,7 +157,7 @@ export default function UserInformation() {
 
           <Text>Allergy Notes:</Text>
           <TextInput
-            style={[styles.input, styles.largeInput ]}
+            style={[styles.input, styles.largeInput]}
             placeholder="Enter allergy notes"
             value={allergyNotes}
             onChangeText={(text) => setAllergyNotes(text)}
@@ -119,10 +168,10 @@ export default function UserInformation() {
             style={styles.picker}
             itemStyle={styles.pickerItem}
             selectedValue={isPregnant}
-            onValueChange={()=> {}}
+            onValueChange={() => {}}
           >
-            <Picker.Item label="Not Pregnant" value="notPregnant" />
-            <Picker.Item label="Pregnant" value="pregnant" />
+            <Picker.Item label="Not Pregnant" value="false" />
+            <Picker.Item label="Pregnant" value="yes" />
           </Picker>
 
           {/* {isPregnant === "pregnant" && (
@@ -140,7 +189,7 @@ export default function UserInformation() {
 
           <Text>Medication Notes:</Text>
           <TextInput
-            style={[styles.input, styles.largeInput ]}
+            style={[styles.input, styles.largeInput]}
             placeholder="Enter medication notes"
             value={medicationNotes}
             onChangeText={(text) => setMedicationNotes(text)}
@@ -148,7 +197,7 @@ export default function UserInformation() {
 
           <Text>Residential Address:</Text>
           <TextInput
-            style={[styles.input, styles.largeInput ]}
+            style={[styles.input, styles.largeInput]}
             placeholder="Enter residential address"
             value={address}
             onChangeText={(text) => setAddress(text)}
@@ -156,7 +205,7 @@ export default function UserInformation() {
 
           <Text>Medical Notes:</Text>
           <TextInput
-            style={[styles.input, styles.largeInput ]}
+            style={[styles.input, styles.largeInput]}
             placeholder="Enter medical notes"
             value={medicalNotes}
             onChangeText={(text) => setMedicalNotes(text)}
@@ -167,13 +216,13 @@ export default function UserInformation() {
             style={styles.picker}
             itemStyle={styles.pickerItem}
             selectedValue={isPregnant}
-            onValueChange={()=> {}}
+            onValueChange={() => {}}
           >
             <Picker.Item label="No" value="false" />
             <Picker.Item label="Yes" value="true" />
           </Picker>
 
-          <TouchableOpacity style={styles.saveButton}>
+          <TouchableOpacity onPress={handleSave} style={styles.saveButton}>
             <View>
               <Text>Save</Text>
             </View>
@@ -204,10 +253,10 @@ const styles = StyleSheet.create({
     borderRadius: 10,
     padding: 13,
     marginBottom: 10,
-    backgroundColor: "#D6D6D6"
+    backgroundColor: "#D6D6D6",
   },
   largeInput: {
-    height: 100
+    height: 100,
   },
   picker: {
     backggroundColor: "black",
