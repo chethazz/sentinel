@@ -23,8 +23,8 @@ export default function LoginScreen() {
 
   return (
     <View
-      className="flex-1 bg-white"
-      style={{ backgroundColor: themeColors.bg }}
+      className="flex-1 bg-gray-300"
+      
     >
       <SafeAreaView className="flex ">
         <View className="flex-row justify-center">
@@ -57,7 +57,7 @@ export default function LoginScreen() {
           </TouchableOpacity>
           <TouchableOpacity
             onPress={handleLogin}
-            className="py-3 bg-yellow-400 rounded-xl"
+            className="py-3 bg-red-300 rounded-xl"
           >
             <Text className="text-xl font-bold text-center text-gray-700">
               Login
@@ -67,32 +67,12 @@ export default function LoginScreen() {
         <Text className="text-xl text-gray-700 font-bold text-center py-5">
           Or
         </Text>
-        <View className="flex-row justify-center space-x-12">
-          <TouchableOpacity className="p-2 bg-gray-100 rounded-2xl">
-            <Image
-              source={require("../assets/icons/google.png")}
-              className="w-10 h-10"
-            />
-          </TouchableOpacity>
-          <TouchableOpacity className="p-2 bg-gray-100 rounded-2xl">
-            <Image
-              source={require("../assets/icons/apple.png")}
-              className="w-10 h-10"
-            />
-          </TouchableOpacity>
-          <TouchableOpacity className="p-2 bg-gray-100 rounded-2xl">
-            <Image
-              source={require("../assets/icons/facebook.png")}
-              className="w-10 h-10"
-            />
-          </TouchableOpacity>
-        </View>
-        <View className="flex-row justify-center mt-7">
+        <View className="flex-row justify-center">
           <Text className="text-gray-500 font-semibold">
             Don't have an account?
           </Text>
           <Link href="/signup">
-            <Text className="font-semibold text-yellow-500"> Sign Up</Text>
+            <Text className="font-semibold text-red-300"> Sign Up</Text>
           </Link>
         </View>
       </View>
