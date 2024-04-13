@@ -40,7 +40,7 @@ export default function LoginScreen() {
       console.log(response);
       dispatch(
         setLogin({
-          user: response,
+          user: response.users,
           isLoggedIn: true,
           userLocation: {
             longitude: 0,
