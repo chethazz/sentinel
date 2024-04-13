@@ -37,3 +37,15 @@ export const register = async (username, email, password) => {
     throw error;
   }
 };
+
+export const login = async (email, password) => {
+  try {
+    const response = await axiosInstance.post(LOGIN_ENDPOINT, {
+      email,
+      password,
+    });
+    return response.users;
+  } catch (error) {
+    throw error;
+  }
+};

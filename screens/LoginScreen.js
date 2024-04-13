@@ -37,10 +37,10 @@ export default function LoginScreen() {
 
     try {
       const response = await login(email, password);
-      console.log(response);
+      console.log(response.users);
       dispatch(
         setLogin({
-          user: response.users,
+          user: response,
           isLoggedIn: true,
           userLocation: {
             longitude: 0,
