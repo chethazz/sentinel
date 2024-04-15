@@ -103,7 +103,7 @@ export default function UserInformation() {
             onChangeText={(text) => setName(text)}
           />
 
-          <Text>Date of Birth:</Text>
+          <Text>Age:</Text>
           <TextInput
             style={styles.input}
             placeholder="Enter your weight"
