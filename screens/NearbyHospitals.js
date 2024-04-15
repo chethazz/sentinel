@@ -9,8 +9,6 @@ import {
 } from "react-native";
 import * as Location from "expo-location";
 import MapView, { Marker } from "react-native-maps";
-import MapViewDirections from "react-native-maps-directions";
-import Directions from "./Directions";
 import { SafeAreaView } from "react-native-safe-area-context";
 
 const windowWidth = Dimensions.get("window").width;
