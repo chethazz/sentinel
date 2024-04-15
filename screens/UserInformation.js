@@ -155,10 +155,10 @@ export default function UserInformation() {
             <Picker.Item label="O-" value="O-" />
           </Picker>
 
-          <Text>Allergy Notes:</Text>
+          <Text>Medical Notes:</Text>
           <TextInput
             style={[styles.input, styles.largeInput]}
-            placeholder="Enter allergy notes"
+            placeholder="Enter medical notes"
             value={allergyNotes}
             onChangeText={(text) => setAllergyNotes(text)}
           />
@@ -187,13 +187,13 @@ export default function UserInformation() {
             </>
           )} */}
 
-          <Text>Medication Notes:</Text>
+          {/* <Text>Medication Notes:</Text>
           <TextInput
             style={[styles.input, styles.largeInput]}
             placeholder="Enter medication notes"
             value={medicationNotes}
             onChangeText={(text) => setMedicationNotes(text)}
-          />
+          /> */}
 
           <Text>Residential Address:</Text>
           <TextInput
