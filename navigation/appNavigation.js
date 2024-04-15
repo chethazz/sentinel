@@ -55,6 +55,7 @@ export default function AppNavigation() {
     <Stack.Screen name="SafetyCheck/index" options={{ headerShown: false }} />
     <Stack.Screen name="main/UserInfo/index" options={{ headerShown: false }} />
     <Stack.Screen name="main/SOS/index" options={{ headerShown: false }} />
+    <Stack.Screen name="AIChat/index" options={{ headerShown: false }} />
    </Stack>
 
   );

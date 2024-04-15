@@ -1,6 +1,13 @@
 import React from "react";
-import { ScrollView, StyleSheet, Text, View } from "react-native";
+import {
+  ScrollView,
+  StyleSheet,
+  Text,
+  TouchableOpacity,
+  View,
+} from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
+import { router } from "expo-router";
 
 const sampleTips = [
   {
@@ -79,6 +86,12 @@ export default function SafetyTips() {
           </React.Fragment>
         ))}
       </ScrollView>
+      <TouchableOpacity
+        style={styles.fab}
+        onPress={() => router.push("/AIChat")}
+      >
+        <Text style={styles.aichat}>AI Chat</Text>
+      </TouchableOpacity>
     </SafeAreaView>
   );
 }
@@ -87,7 +100,7 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     padding: 20,
-    paddingBottom: 0
+    paddingBottom: 0,
   },
   title: {
     fontSize: 35,
@@ -107,5 +120,17 @@ const styles = StyleSheet.create({
   tip: {
     fontSize: 16,
     marginBottom: 4,
+  },
+  fab: {
+    position: "absolute",
+    bottom: 20,
+    right: 20,
+    borderRadius: 20,
+    padding: 20,
+    backgroundColor: "black",
+  },
+  aichat: {
+    color: "white",
+    fontWeight: "bold",
   },
 });

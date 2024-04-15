@@ -32,6 +32,7 @@
     "react-native": "^0.73.6",
     "react-native-alphabetlistview": "^0.3.1",
     "react-native-contacts": "^7.0.8",
+    "react-native-floating-action": "^1.22.0",
     "react-native-heroicons": "^3.2.0",
     "react-native-maps": "^1.13.0",
     "react-native-ratings": "^8.1.0",
