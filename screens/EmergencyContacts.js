@@ -12,7 +12,7 @@ export default function EmergencyContacts() {
     <SafeAreaView style={styles.container}>
       <Text style={styles.title}>Emergency Contacts</Text>
       <Text style={styles.infoText}>
-        You can add up to 5 emergency contacts here
+        You can add an emergency contact here
       </Text>
       <TouchableOpacity style={styles.fab} onPress={handleAddContact}>
         <MaterialIcons name="add" size={30} color="white" />
