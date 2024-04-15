@@ -41,16 +41,16 @@ const DATA = [
   },
 ];
 
-const MainItems = [
-  {
-    title: "Your Information",
-    routeName: "UserInfo",
-  },
-  {
-    title: "SOS",
-    routeName: "SOS",
-  },
-];
+// const MainItems = [
+//   {
+//     title: "Your Information",
+//     routeName: "UserInfo",
+//   },
+//   {
+//     title: "SOS",
+//     routeName: "SOS",
+//   },
+// ];
 
 export default function HomeScreen() {
   const [carCrashDetected, setCarCrashDetected] = useState(false);
@@ -58,7 +58,7 @@ export default function HomeScreen() {
   useFocusEffect(
     React.useCallback(() => {
       const tiltThreshold = 2;
-      const detectionDuration = 6000; 
+      const detectionDuration = 6000;
 
       let detectionTimeout;
 
@@ -83,7 +83,7 @@ export default function HomeScreen() {
 
       return () => {
         subscription.remove();
-        clearTimeout(detectionTimeout); 
+        clearTimeout(detectionTimeout);
       };
     }, [carCrashDetected])
   );
@@ -118,17 +118,25 @@ export default function HomeScreen() {
         </View>
 
         <View style={styles.mainItems}>
-          {MainItems.map((item) => (
-            <TouchableOpacity
-              key={item.routeName}
-              style={styles.mainItemsContainer}
-              onPress={() => router.push(`main/${item?.routeName}`)}
-            >
-              <View style={styles.mainItemsButtons}>
-                <Text style={styles.featureTitles}>{item.title}</Text>
-              </View>
-            </TouchableOpacity>
-          ))}
+          <TouchableOpacity
+            key={"UserInfo"}
+            style={styles.mainItemsContainer}
+            onPress={() => router.push(`main/UserInfo`)}
+          >
+            <View style={styles.mainItemsButtons}>
+              <Text style={styles.featureTitles}>Your Information</Text>
+            </View>
+          </TouchableOpacity>
+
+          <TouchableOpacity
+            key={"SOS"}
+            style={styles.mainItemsContainer}
+            onPress={() => {}}
+          >
+            <View style={styles.mainItemsButtons}>
+              <Text style={styles.featureTitles}>SOS</Text>
+            </View>
+          </TouchableOpacity>
         </View>
       </View>
     </SafeAreaView>
