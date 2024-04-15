@@ -1,24 +1,3 @@
-// import React from "react";
-// import { StyleSheet, Text } from "react-native";
-// import { SafeAreaView } from "react-native-safe-area-context";
-
-// export default function NearbyHospitals() {
-//   return (
-//     <SafeAreaView style={styles.container}>
-//       <Text style={styles.title}>Nearby Hospitals</Text>
-//     </SafeAreaView>
-//   );
-// }
-
-// const styles = StyleSheet.create({
-//   container: {
-//     padding: 20,
-//   },
-//   title: {
-//     fontSize: 35,
-//     fontWeight: "bold",
-//   },
-// });
 
 import React, { useEffect, useState } from "react";
 import {
@@ -30,6 +9,8 @@ import {
 } from "react-native";
 import * as Location from "expo-location";
 import MapView, { Marker } from "react-native-maps";
+import MapViewDirections from "react-native-maps-directions";
+import Directions from "./Directions";
 import { SafeAreaView } from "react-native-safe-area-context";
 
 const windowWidth = Dimensions.get("window").width;
@@ -37,9 +18,14 @@ const windowHeight = Dimensions.get("window").height;
 
 const NearbyHospitals = () => {
   const [currentLocation, setCurrentLocation] = useState(null);
-  const [initialRegion, setInitialRegion] = useState(null);
-  const [nearbyHospitals, setNearbyHospitals] = useState([]);
-  const [selectedHospital, setSelectedHospital] = useState(null);
+  const [initialRegion, setInitialRegion] = useState({
+    latitude: 0,
+    longitude: 0,
+    latitudeDelta: 0,
+    longitudeDelta: 0,
+  });
+  const [nearbyPlaces, setNearbyPlaces] = useState([]);
+  const [selectedPlace, setSelectedPlace] = useState(null);
   const [directions, setDirections] = useState(null);
 
   useEffect(() => {
@@ -64,37 +50,43 @@ const NearbyHospitals = () => {
     getLocation();
   }, []);
 
-  const fetchNearbyHospitals = async () => {
+  const fetchNearbyPlaces = async (type) => {
     try {
       const response = await fetch(
-        `https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=<span class="math-inline">\{initialRegion\.latitude\},</span>{initialRegion.longitude}&radius=5000&type=hospital&key=AIzaSyBw2s3FNzQUe7DbgHf2CiV0xOsIYquEKQg
-        ` // Replace with your Google Maps API key
+        `https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=${initialRegion.latitude},${initialRegion.longitude}&radius=5000&type=${type}&key=AIzaSyABJzaTuyRnUzPSC70zTeeBegzO3LA2wBA`
       );
       const data = await response.json();
       if (data.results && data.results.length > 0) {
-        setNearbyHospitals(data.results);
+        // setNearbyHospitals(data.results);
+        console.log(`Nearby ${type}s data:`, data?.results);
+        setNearbyPlaces(data.results);
       }
-      console.log("responsee of fetch google map ", response);
     } catch (error) {
-      console.error("Error fetching nearby hospitals:", error);
+      console.error(`Error fetching nearby ${type}s:`, error);
     }
   };
 
-  const handleHospitalMarkerPress = async (hospital) => {
-    setSelectedHospital(hospital);
+  const handleNearbyPlaceMarkerPress = async (nearByPlace) => {
+    setSelectedPlace(nearByPlace);
+    console.log("selected nearByPlacelllllllll;l", selectedPlace);
     // Clear existing directions (if any)
     setDirections(null);
-    // Call function to fetch directions for the selected hospital
-    fetchDirections(hospital);
+    // Call function to fetch directions for the selected nearByPlace
+    fetchDirections(nearByPlace);
   };
 
-  const fetchDirections = async (hospital) => {
+  const fetchDirections = async (selectedPlace) => {
     try {
+      console.log("fetch directionsss sssssss", selectedPlace);
+      const destLat = selectedPlace?.geometry?.location?.lat;
+      const destLng = selectedPlace?.geometry?.location?.lng;
+
       const response = await fetch(
-        `https://maps.googleapis.com/maps/api/directions/json?origin=<span class="math-inline">\{currentLocation\.latitude\},</span>{currentLocation.longitude}&destination=<span class="math-inline">\{hospital\.geometry\.location\.lat\},</span>{hospital.geometry.location.lng}&key=AIzaSyBw2s3FNzQUe7DbgHf2CiV0xOsIYquEKQg` // Replace with your Google Maps API key
+        `https://maps.googleapis.com/maps/api/directions/json?origin=${currentLocation.latitude},${currentLocation.longitude}&destination=${destLat},${destLng}&key=AIzaSyABJzaTuyRnUzPSC70zTeeBegzO3LA2wBA` // Replace with your Google Maps API key
       );
       const data = await response.json();
       if (data.routes && data.routes.length > 0) {
+        console.log("directionssss*****", data.routes[0].legs[0]);
         setDirections(data.routes[0].legs[0]);
       }
     } catch (error) {
@@ -103,77 +95,96 @@ const NearbyHospitals = () => {
   };
 
   return (
-    <SafeAreaView>
-      <View style={styles.container}>
-        <MapView
-          style={styles.map}
-          initialRegion={initialRegion}
-          showsUserLocation
-          showsCompass
-        >
-          {currentLocation && (
-            <Marker
-              coordinate={{
-                latitude: currentLocation.latitude,
-                longitude: currentLocation.longitude,
-              }}
-              title="Your Location"
-            />
-          )}
+    <View style={styles.container}>
+      <MapView
+        style={styles.map}
+        initialRegion={initialRegion}
+        showsUserLocation
+        showsCompass
+      >
+        {currentLocation && (
+          <Marker
+            coordinate={{
+              latitude: currentLocation.latitude,
+              longitude: currentLocation.longitude,
+            }}
+            title="Your Location"
+          />
+        )}
 
-          {/* Display nearby hospitals */}
-          {nearbyHospitals.map((hospital, index) => (
-            <Marker
-              key={index}
-              coordinate={{
-                latitude: hospital.geometry.location.lat,
-                longitude: hospital.geometry.location.lng,
-              }}
-              title={hospital.name}
-              description={hospital.vicinity}
-              pinColor="red"
-              onPress={() => handleHospitalMarkerPress(hospital)}
-            />
-          ))}
-        </MapView>
+        {/* Display nearby hospital or police station  */}
+        {nearbyPlaces.map((nearbyPlace, index) => (
+          <Marker
+            key={index}
+            coordinate={{
+              latitude: nearbyPlace.geometry.location.lat,
+              longitude: nearbyPlace.geometry.location.lng,
+            }}
+            title={nearbyPlace.name}
+            description={nearbyPlace.vicinity}
+            pinColor="red"
+            onPress={() => handleNearbyPlaceMarkerPress(nearbyPlace)}
+          />
+        ))}
+      </MapView>
 
-        <TouchableOpacity style={styles.button} onPress={fetchNearbyHospitals}>
-          <Text style={styles.buttonText}>Find Nearby Hospitals</Text>
+
+        <TouchableOpacity style={styles.button} onPress={() => fetchNearbyPlaces("hospital")}>
+          <Text style={styles.buttonText}>Hospitals</Text>
         </TouchableOpacity>
 
-        {selectedHospital && directions && (
-          <View style={styles.directionsContainer}>
-            <Text>To: {selectedHospital.name}</Text>
-            <Text>Distance: {directions.distance.text}</Text>
-            <Text>Duration: {directions.duration.text}</Text>
-          </View>
-        )}
-      </View>
-    </SafeAreaView>
+        <TouchableOpacity style={styles.button2} onPress={() => fetchNearbyPlaces("police")}>
+          <Text style={styles.buttonText}>PoliceStations</Text>
+        </TouchableOpacity>
+
+      {selectedPlace && directions && (
+        <View style={styles.directionsContainer}>
+          <Text>To: {selectedPlace.name}</Text>
+          <Text>Distance: {directions.distance.text}</Text>
+          <Text>Duration: {directions.duration.text}</Text>
+        </View>
+      )}
+    </View>
   );
 };
 
 const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    alignItems: "center",
+    justifyContent: "center",
+  },
   map: {
     width: "100%",
-    height: "100%",
+    height: "80%",
   },
   button: {
     position: "absolute",
     bottom: 20,
-    alignSelf: "center",
-    backgroundColor: "blue",
+    left: 20,
+    backgroundColor: "rgb(255, 150, 150)",
     paddingVertical: 10,
-    paddingHorizontal: 20,
+    paddingHorizontal: 50,
     borderRadius: 10,
+    marginRight: 10, // Add margin to create space between buttons
+  },
+  button2: {
+    position: "absolute",
+    bottom: 20,
+    left: "50%", // Position in the middle of the screen
+    backgroundColor: "rgb(255, 150, 150)",
+    paddingVertical: 10,
+    paddingHorizontal: 30,
+    borderRadius: 10,
+    marginLeft: 10, // Add margin to create space between buttons
   },
   buttonText: {
-    color: "white",
+    color: "black",
     fontWeight: "bold",
   },
   directionsContainer: {
     position: "absolute",
-    bottom: 100,
+    bottom: 150,
     alignSelf: "center",
     backgroundColor: "white",
     paddingVertical: 10,
