@@ -9,6 +9,7 @@ import {
   Text,
   ActivityIndicator,
   ScrollView,
+  TouchableOpacity,
 } from "react-native";
 
 const AIChat = () => {
@@ -77,6 +78,9 @@ const AIChat = () => {
 
   return (
     <SafeAreaView style={styles.container}>
+      <View styles={styles.spacing}>
+        <Text style={styles.title}>Sentinel AI</Text>
+      </View>
       <ScrollView ref={scrollViewRef} contentContainerStyle={styles.chatWindow}>
         {chatHistory.map((message, index) => (
           <View
@@ -101,8 +105,19 @@ const AIChat = () => {
           onChangeText={setUserInput}
           placeholder="Type your message..."
         />
-        <Button title="Send" onPress={sendMessage} disabled={loading} />
-        {buttonLoading && <ActivityIndicator color="#0000ff" />}
+        <TouchableOpacity
+  title="Send" // Removed for clarity (doesn't work with TouchableOpacity)
+  onPress={sendMessage}
+  style={styles.sendButton}
+  disabled={loading}
+>
+  {buttonLoading ? (
+    <ActivityIndicator color="#0000ff" />
+  ) : (
+    <Text>Send</Text>
+  )}
+</TouchableOpacity>
+
       </View>
     </SafeAreaView>
   );
@@ -112,8 +127,16 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: "#fff",
-    paddingHorizontal: 10,
-    padding: 40,
+    paddingHorizontal: 20,
+    paddingTop: 50,
+  },
+  spacing: {
+    paddingHorizontal: 20,
+    paddingTop: 40,
+  },
+  title: {
+    fontSize: 35,
+    fontWeight: "bold",
   },
   chatWindow: {
     padding: 10,
@@ -134,20 +157,36 @@ const styles = StyleSheet.create({
     alignSelf: "flex-start",
     maxWidth: "70%",
   },
+  sendButton: {
+    backgroundColor: "#D6D6D6",
+    paddingHorizontal: 20,
+    height: 48,
+    justifyContent: 'center',
+    alignItems: 'center',
+    borderTopRightRadius: 15,
+    borderBottomRightRadius: 15,
+    borderLeftWidth: 1,
+    borderColor: 'grey',
+    fontSize: 16,
+  },
   messageText: {
     fontSize: 16,
   },
   inputRow: {
     flexDirection: "row",
     alignItems: "center",
-    padding: 10,
+    justifyContent: 'space-between',
+    display: 'flex',
+    marginBottom: 15,
   },
   textInput: {
     flex: 1,
-    marginRight: 10,
-    padding: 8,
-    borderRadius: 5,
-    backgroundColor: "#f5f5f5",
+    paddingHorizontal: 20,
+    paddingVertical: 10,
+    borderTopLeftRadius: 15,
+    borderBottomLeftRadius: 15,
+    backgroundColor: "#D6D6D6",
+    width: '60%'
   },
   loadingIndicator: {
     position: "absolute",
