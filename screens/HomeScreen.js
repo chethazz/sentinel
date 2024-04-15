@@ -6,6 +6,7 @@ import {
   TouchableOpacity,
   Image,
 } from "react-native";
+import { sos_Api } from "../axios/axiosConfig";
 import React, { useEffect, useState } from "react";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { useNavigation } from "@react-navigation/native";
@@ -54,7 +55,18 @@ const DATA = [
 
 export default function HomeScreen() {
   const [carCrashDetected, setCarCrashDetected] = useState(false);
-
+  const handleSOSRequest = async () => {
+    try {
+      const response = await sos_Api({
+        allergies: "Peanuts, Shellfish",
+        address: "123 Main St, City, Country",
+        bloodType: "AB+",
+      });
+      console.log(response);
+    } catch (error) {
+      console.error("Error in SOS API:", error);
+    }
+  };
   useFocusEffect(
     React.useCallback(() => {
       const tiltThreshold = 2;
@@ -131,7 +143,7 @@ export default function HomeScreen() {
           <TouchableOpacity
             key={"SOS"}
             style={styles.mainItemsContainer}
-            onPress={() => {}}
+            onPress={handleSOSRequest}
           >
             <View style={styles.mainItemsButtons}>
               <Text style={styles.featureTitles}>SOS</Text>
