@@ -130,8 +130,11 @@ export default function AddContacts() {
         value={searchQuery}
         onChangeText={handleSearch}
       />
-      <View style={styles.phoneNumberContainer}>
-        <Text style={styles.phoneNumber}>Phone Number</Text>
+      <View style={[styles.phoneNumberContainer, styles.phoneNumberContainer1]}>
+        <View style={styles.nameAndNumber}>
+          <Text style={styles.contactName}>Abhilash</Text>
+          <Text style={styles.phoneNumber}>Phone Number</Text>
+        </View>
         <TouchableOpacity onPress={() => {}}>
           <Text style={styles.removeButtonText}>Remove</Text>
         </TouchableOpacity>
@@ -173,8 +176,14 @@ const styles = StyleSheet.create({
   phoneNumberContainer: {
     flexDirection: "row",
     marginVertical: 5,
-
     alignItems: "center",
+    justifyContent: 'space-between',
+  },
+  phoneNumberContainer1: {
+    backgroundColor: "rgb(235, 235, 235)",
+    height: 100,
+    padding: 20,
+    borderRadius: 10,
   },
   phoneNumber: {
     fontSize: 16,
