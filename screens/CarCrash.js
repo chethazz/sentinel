@@ -7,6 +7,7 @@ import {
   Vibration,
 } from "react-native";
 import React, { useState, useEffect } from "react";
+import { sos_Api } from "../axios/axiosConfig";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { StyleSheet } from "react-native";
 import { Audio } from "expo-av";
@@ -31,7 +32,7 @@ export default function CarCrash() {
     }
 
     if (isTimerRunning) {
-      Vibration.vibrate([200, 1000], true); 
+      Vibration.vibrate([200, 1000], true);
       playSound();
 
       interval = setInterval(() => {
@@ -43,21 +44,35 @@ export default function CarCrash() {
             if (sound) {
               sound.stopAsync();
             }
-            return 15; 
+            const handleSOSRequest = async () => {
+              try {
+                const response = await sos_Api({
+                  allergies: "Peanuts, Shellfish",
+                  address: "123 Main St, City, Country",
+                  bloodType: "AB+",
+                });
+                console.log(response);
+              } catch (error) {
+                console.error("Error in SOS API:", error);
+              }
+            };
+
+            handleSOSRequest();
+            return 15;
           }
           return prevTimer - 1;
         });
       }, 1000);
     } else {
-      setTimer(15); 
-      Vibration.cancel(); 
+      setTimer(15);
+      Vibration.cancel();
       if (sound) {
         sound.stopAsync();
       }
     }
 
     return async () => {
-      clearInterval(interval); 
+      clearInterval(interval);
       Vibration.cancel();
       if (sound) {
         await sound.unloadAsync();
@@ -76,7 +91,14 @@ export default function CarCrash() {
       const { x, y, z } = accelerometerData;
 
       // Check if the phone is tilted to the left or right
-      if (x < -tiltThreshold || x > tiltThreshold || y < -tiltThreshold || y > tiltThreshold || z < -tiltThreshold || z > tiltThreshold) {
+      if (
+        x < -tiltThreshold ||
+        x > tiltThreshold ||
+        y < -tiltThreshold ||
+        y > tiltThreshold ||
+        z < -tiltThreshold ||
+        z > tiltThreshold
+      ) {
         // Start the timer if not already running
         if (!isTimerRunning) {
           handleStartStop();

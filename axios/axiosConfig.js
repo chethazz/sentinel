@@ -63,10 +63,10 @@ export const editUser = async (userId, userData) => {
   }
 };
 
-export const sos_Api = async (userData) => {
+export const sos_Api = async ({allergies ,address ,bloodType }) => {
   try {
     const response = await axiosInstance.post(SOS_ENDPOINT, {
-      userData,
+      allergies ,address ,bloodType,
     });
     return response;
   } catch (error) {
