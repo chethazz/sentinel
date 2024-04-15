@@ -1,4 +1,3 @@
-
 import React, { useEffect, useState } from "react";
 import {
   StyleSheet,
@@ -93,7 +92,7 @@ const NearbyHospitals = () => {
   };
 
   return (
-    <View style={styles.container}>
+    <SafeAreaView style={styles.container}>
       <MapView
         style={styles.map}
         initialRegion={initialRegion}
@@ -126,14 +125,21 @@ const NearbyHospitals = () => {
         ))}
       </MapView>
 
-
-        <TouchableOpacity style={styles.button} onPress={() => fetchNearbyPlaces("hospital")}>
+      <View style={styles.buttonContainer}>
+        <TouchableOpacity
+          style={styles.button}
+          onPress={() => fetchNearbyPlaces("hospital")}
+        >
           <Text style={styles.buttonText}>Hospitals</Text>
         </TouchableOpacity>
 
-        <TouchableOpacity style={styles.button2} onPress={() => fetchNearbyPlaces("police")}>
+        <TouchableOpacity
+          style={styles.button}
+          onPress={() => fetchNearbyPlaces("police")}
+        >
           <Text style={styles.buttonText}>PoliceStations</Text>
         </TouchableOpacity>
+      </View>
 
       {selectedPlace && directions && (
         <View style={styles.directionsContainer}>
@@ -142,39 +148,32 @@ const NearbyHospitals = () => {
           <Text>Duration: {directions.duration.text}</Text>
         </View>
       )}
-    </View>
+    </SafeAreaView>
   );
 };
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
-    alignItems: "center",
-    justifyContent: "center",
+    flexDirection: "column",
+    justifyContent: "space-between",
   },
   map: {
-    width: "100%",
-    height: "80%",
+    height: "91%",
+    // marginHorizontal: 20,
+    // borderRadius: 20,
+  },
+  buttonContainer: {
+    flexDirection: "row",
+    justifyContent: "space-around",
+    marginHorizontal: 10,
   },
   button: {
-    position: "absolute",
-    bottom: 20,
-    left: 20,
     backgroundColor: "rgb(255, 150, 150)",
-    paddingVertical: 10,
-    paddingHorizontal: 50,
-    borderRadius: 10,
-    marginRight: 10, // Add margin to create space between buttons
-  },
-  button2: {
-    position: "absolute",
-    bottom: 20,
-    left: "50%", // Position in the middle of the screen
-    backgroundColor: "rgb(255, 150, 150)",
-    paddingVertical: 10,
-    paddingHorizontal: 30,
-    borderRadius: 10,
-    marginLeft: 10, // Add margin to create space between buttons
+    width: "45%",
+    display: "flex",
+    alignItems: "center",
+    paddingVertical: 20,
+    borderRadius: 20,
   },
   buttonText: {
     color: "black",
