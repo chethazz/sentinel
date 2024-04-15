@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import { sos_Api } from "../axios/axiosConfig";
 import { Dimensions } from "react-native";
 import {
   StyleSheet,
@@ -34,6 +35,24 @@ export default function SafetyCheck() {
       interval = setInterval(() => {
         setCountdown((prevCountdown) => prevCountdown - 1);
       }, 1000);
+
+     
+    }
+    if(countdown === 1){
+      const handleSOSRequest = async () => {
+        try {
+          const response = await sos_Api({
+            allergies: "Peanuts, Shellfish",
+            address: "123 Main St, City, Country",
+            bloodType: "AB+",
+          });
+          console.log(response);
+        } catch (error) {
+          console.error("Error in SOS API:", error);
+        }
+      };
+
+      handleSOSRequest();
     }
 
     return () => clearInterval(interval);
