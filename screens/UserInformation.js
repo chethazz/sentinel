@@ -203,13 +203,13 @@ export default function UserInformation() {
             onChangeText={(text) => setAddress(text)}
           />
 
-          <Text>Medical Notes:</Text>
+          {/* <Text>Medical Notes:</Text>
           <TextInput
             style={[styles.input, styles.largeInput]}
             placeholder="Enter medical notes"
             value={medicalNotes}
             onChangeText={(text) => setMedicalNotes(text)}
-          />
+          /> */}
 
           <Text>Organ Donor:</Text>
           <Picker
