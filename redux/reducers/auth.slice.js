@@ -4,10 +4,7 @@ import { createSlice } from '@reduxjs/toolkit';
 const initialState = {
     user: null,
     isLoggedIn : false,
-    userLocation: {
-        longitude:0,
-        latitude:0,
-    },
+    userLocation: null,
 }
 
 export const authSlice = createSlice({

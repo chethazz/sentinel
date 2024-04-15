@@ -1,5 +1,5 @@
 import { View, Text, TouchableOpacity, Image, TextInput } from "react-native";
-import React, { useState } from "react";
+import React, { useState , useEffect } from "react";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { ArrowLeftIcon } from "react-native-heroicons/solid";
 import { themeColors } from "../theme";
@@ -15,39 +15,70 @@ export default function LoginScreen() {
   const [password, setPassword] = useState("");
   const [emailError, setEmailError] = useState("");
   const [passwordError, setPasswordError] = useState("");
+  const [currentLocation, setCurrentLocation] = useState({
+    latitude:0,
+    longitude:0
+  });
+  const [initialRegion, setInitialRegion] = useState({
+    latitude: 0,
+    longitude: 0,
+    latitudeDelta: 0,
+    longitudeDelta: 0,
+  });
+
+
+ 
+    const getLocation = async () => {
+      let { status } = await Location.requestForegroundPermissionsAsync();
+      if (status !== "granted") {
+        console.log("Permission to access location was denied");
+        return;
+      }
+
+      let location = await Location.getCurrentPositionAsync({});
+      setCurrentLocation(location.coords);
+
+      setInitialRegion({
+        latitude: location.coords.latitude,
+        longitude: location.coords.longitude,
+        latitudeDelta: 0.005,
+        longitudeDelta: 0.005,
+      });
+    };
+
+  
+
 
   const handleLogin = async () => {
     setEmailError("");
     setPasswordError("");
 
-    if (!email || !email.trim()) {
-      setEmailError("Email is required");
-      return;
-    }
+    // if (!email || !email.trim()) {
+    //   setEmailError("Email is required");
+    //   return;
+    // }
 
-    if (!password) {
-      setPasswordError("Password is required");
-      return;
-    }
+    // if (!password) {
+    //   setPasswordError("Password is required");
+    //   return;
+    // }
 
-    if (password.length < 8) {
-      setPasswordError("Password must be at least 8 characters long");
-      return;
-    }
+    // if (password.length < 8) {
+    //   setPasswordError("Password must be at least 8 characters long");
+    //   return;
+    // }
 
     try {
-      const response = await login(email, password);
-      console.log(response.users);
-      dispatch(
-        setLogin({
-          user: response,
-          isLoggedIn: true,
-          userLocation: {
-            longitude: 0,
-            latitude: 0,
-          },
-        })
-      );
+      // const response = await login(email, password);
+      // console.log(response.users);
+      // await getLocation()
+      // dispatch(
+      //   setLogin({
+      //     user: response,
+      //     isLoggedIn: true,
+      //     userLocation: initialRegion,
+      //   })
+      // );
       router.push("/home");
     } catch (error) {
       alert("Invalid email or password. Please try again.");

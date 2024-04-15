@@ -8,12 +8,25 @@ import {
   TextInput,
 } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
+import { useSelector } from "react-redux";
+import MapView, { Marker } from "react-native-maps";
 
 export default function SafetyCheck() {
   const [hours, setHours] = useState("");
   const [minutes, setMinutes] = useState("");
   const [countdown, setCountdown] = useState(0);
   const [isRunning, setIsRunning] = useState(false);
+  const [currentLocation, setCurrentLocation] = useState(null);
+  const [initialRegion, setInitialRegion] = useState({
+    latitude: 0,
+    longitude: 0,
+    latitudeDelta: 0,
+    longitudeDelta: 0,
+  });
+
+  // const initialRegion = useSelector((state) => state?.auth?.userLocation);
+
+  // console.log('redux user locationnnnn',initialRegion);
 
   useEffect(() => {
     let interval;
@@ -25,6 +38,30 @@ export default function SafetyCheck() {
 
     return () => clearInterval(interval);
   }, [isRunning, countdown]);
+
+
+  useEffect(() => {
+    const getLocation = async () => {
+      let { status } = await Location.requestForegroundPermissionsAsync();
+      if (status !== "granted") {
+        console.log("Permission to access location was denied");
+        return;
+      }
+
+      let location = await Location.getCurrentPositionAsync({});
+      setCurrentLocation(location.coords);
+
+      setInitialRegion({
+        latitude: location.coords.latitude,
+        longitude: location.coords.longitude,
+        latitudeDelta: 0.005,
+        longitudeDelta: 0.005,
+      });
+    };
+
+    getLocation();
+  }, []);
+
 
   const formatTime = (time) => (time < 10 ? `0${time}` : `${time}`);
 
@@ -80,6 +117,27 @@ export default function SafetyCheck() {
     <SafeAreaView style={styles.container}>
       <Text style={styles.title}>Safety Check</Text>
 
+      <View style={styles.mapContainer}>
+      <MapView
+        style={styles.map}
+        initialRegion={initialRegion}
+        showsUserLocation
+        showsCompass
+      >
+        {initialRegion && (
+          <Marker
+            coordinate={{
+              latitude: initialRegion.latitude,
+              longitude: initialRegion.longitude,
+            }}
+            title="Your Location"
+          />
+        )}
+      </MapView>
+
+      </View>
+
+
       <View style={styles.bottomContainer}>
         {isRunning && countdown > 0 ? (
           <View style={styles.countdownContainer}>
@@ -125,11 +183,20 @@ const styles = StyleSheet.create({
     fontSize: 35,
     fontWeight: "bold",
   },
+  mapContainer:{
+    flex: 1,
+    height: "50%",
+    width: "100%",
+    marginTop:10,
+  },
   container: {
     flex: 1,
     justifyContent: "space-between",
     paddingTop: 20,
     paddingHorizontal: 20,
+  },
+  map: {
+    height: "91%",
   },
   timerInputContainer: {
     flexDirection: "row",
