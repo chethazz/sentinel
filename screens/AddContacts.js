@@ -51,9 +51,9 @@ export default function AddContacts() {
 
       // Filter out contacts without phone numbers
       const contactsWithNumbers = data.filter(
-        (contact) => contact.phoneNumbers && contact.phoneNumbers.length > 0 
+        (contact) => contact.phoneNumbers && contact.phoneNumbers.length > 0
       );
-        
+
       // Sort contacts alphabetically
       const sortedContacts = contactsWithNumbers.sort((a, b) =>
         a.name.localeCompare(b.name)
@@ -123,13 +123,19 @@ export default function AddContacts() {
 
   return (
     <SafeAreaView style={styles.container}>
-      <Text style={styles.title}>Select up to 5 Emergency Contacts</Text>
+      <Text style={styles.title}>Select an Emergency Contact</Text>
       <TextInput
         style={styles.searchInput}
         placeholder="Search contacts..."
         value={searchQuery}
         onChangeText={handleSearch}
       />
+      <View style={styles.phoneNumberContainer}>
+        <Text style={styles.phoneNumber}>Phone Number</Text>
+        <TouchableOpacity onPress={() => {}}>
+          <Text style={styles.removeButtonText}>Remove</Text>
+        </TouchableOpacity>
+      </View>
       {renderGroupedContacts()}
     </SafeAreaView>
   );
@@ -181,6 +187,13 @@ const styles = StyleSheet.create({
     marginTop: 10,
   },
   addButtonText: {
+    fontSize: 14,
+    padding: 6,
+    color: "rgb(100,100,100)",
+    backgroundColor: "rgb(215, 215, 215)",
+    borderRadius: 10,
+  },
+  removeButtonText: {
     fontSize: 14,
     padding: 6,
     color: "rgb(100,100,100)",
