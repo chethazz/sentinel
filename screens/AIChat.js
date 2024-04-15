@@ -106,18 +106,17 @@ const AIChat = () => {
           placeholder="Type your message..."
         />
         <TouchableOpacity
-  title="Send" // Removed for clarity (doesn't work with TouchableOpacity)
-  onPress={sendMessage}
-  style={styles.sendButton}
-  disabled={loading}
->
-  {buttonLoading ? (
-    <ActivityIndicator color="#0000ff" />
-  ) : (
-    <Text>Send</Text>
-  )}
-</TouchableOpacity>
-
+          title="Send" // Removed for clarity (doesn't work with TouchableOpacity)
+          onPress={sendMessage}
+          style={styles.sendButton}
+          disabled={loading}
+        >
+          {buttonLoading ? (
+            <ActivityIndicator color="#0000ff" />
+          ) : (
+            <Text>Send</Text>
+          )}
+        </TouchableOpacity>
       </View>
     </SafeAreaView>
   );
@@ -161,12 +160,12 @@ const styles = StyleSheet.create({
     backgroundColor: "#D6D6D6",
     paddingHorizontal: 20,
     height: 48,
-    justifyContent: 'center',
-    alignItems: 'center',
+    justifyContent: "center",
+    alignItems: "center",
     borderTopRightRadius: 15,
     borderBottomRightRadius: 15,
     borderLeftWidth: 1,
-    borderColor: 'grey',
+    borderColor: "grey",
     fontSize: 16,
   },
   messageText: {
@@ -175,8 +174,8 @@ const styles = StyleSheet.create({
   inputRow: {
     flexDirection: "row",
     alignItems: "center",
-    justifyContent: 'space-between',
-    display: 'flex',
+    justifyContent: "space-between",
+    display: "flex",
     marginBottom: 15,
   },
   textInput: {
@@ -186,7 +185,7 @@ const styles = StyleSheet.create({
     borderTopLeftRadius: 15,
     borderBottomLeftRadius: 15,
     backgroundColor: "#D6D6D6",
-    width: '60%'
+    width: "60%",
   },
   loadingIndicator: {
     position: "absolute",
