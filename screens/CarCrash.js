@@ -31,7 +31,7 @@ export default function CarCrash() {
     }
 
     if (isTimerRunning) {
-      Vibration.vibrate([200, 1000], true); // Vibrate 200ms gap
+      Vibration.vibrate([200, 1000], true); 
       playSound();
 
       interval = setInterval(() => {
@@ -40,30 +40,25 @@ export default function CarCrash() {
             clearInterval(interval);
             Vibration.cancel();
             setIsTimerRunning(false);
-            // Stop playing the sound
             if (sound) {
               sound.stopAsync();
             }
-            return 15; // Reset the timer to 15 seconds when it reaches 0
+            return 15; 
           }
           return prevTimer - 1;
         });
       }, 1000);
     } else {
-      setTimer(15); // Reset the timer to 15 seconds when the "Start" button is not pressed
-      Vibration.cancel(); // Stop vibration when the timer is stopped
-
-      // Stop playing the sound
+      setTimer(15); 
+      Vibration.cancel(); 
       if (sound) {
         sound.stopAsync();
       }
     }
 
     return async () => {
-      clearInterval(interval); // Cleanup interval on component unmount
-      Vibration.cancel(); // Stop vibration when the component unmounts or timer is stopped
-
-      // Unload the sound
+      clearInterval(interval); 
+      Vibration.cancel();
       if (sound) {
         await sound.unloadAsync();
       }
