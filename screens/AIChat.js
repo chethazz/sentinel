@@ -1,30 +1,99 @@
-import React, { useState } from 'react';
-import { SafeAreaView, TextInput, Button, View, StyleSheet , Text } from 'react-native';
+import React, { useState, useRef, useEffect } from "react";
+import axios from "axios";
+import {
+  SafeAreaView,
+  TextInput,
+  Button,
+  View,
+  StyleSheet,
+  Text,
+  ActivityIndicator,
+  ScrollView,
+} from "react-native";
 
 const AIChat = () => {
-  const [userInput, setUserInput] = useState('');
+  const [userInput, setUserInput] = useState("");
   const [chatHistory, setChatHistory] = useState([]);
+  const [loading, setLoading] = useState(false);
+  const [scrollToBottom, setScrollToBottom] = useState(false);
+  const scrollViewRef = useRef(null);
+  const [buttonLoading, setButtonLoading] = useState(false);
 
-  const sendMessage = () => {
-    if (userInput.trim() !== '') { // Check for empty input before sending
-      setChatHistory([...chatHistory, { user: true, message: userInput }]);
-      setUserInput(''); // Clear input field after sending
-      // Simulate AI response (replace with your actual AI integration)
-      setTimeout(() => {
-        setChatHistory([...chatHistory, { user: false, message: 'AI response here...' }]);
-      }, 1000); // Simulate a 1-second delay
+  const API_KEY = "AIzaSyAZYQ3LNWFUYBoAqHAO0rMyM43Wqyuo0dQ";
+  const API_URL =
+    "https://generativelanguage.googleapis.com/v1beta/models/gemini-pro:generateContent";
+
+  const sendMessage = async () => {
+    if (userInput.trim() === "") return;
+
+    setLoading(true);
+    setButtonLoading(true);
+    try {
+      const response = await axios.post(
+        `${API_URL}?key=${API_KEY}`,
+        {
+          contents: [
+            {
+              parts: [
+                {
+                  text: userInput,
+                },
+              ],
+            },
+          ],
+        },
+        {
+          headers: {
+            "Content-Type": "application/json",
+          },
+        }
+      );
+
+      const responseData = response.data;
+      const responseText =
+        responseData.candidates[0]?.content?.parts[0]?.text || "";
+
+      setChatHistory([
+        ...chatHistory,
+        { user: true, message: userInput },
+        { user: false, message: responseText },
+      ]);
+      setUserInput("");
+      setScrollToBottom(true);
+    } catch (error) {
+      console.error(error);
+    } finally {
+      setLoading(false);
+      setButtonLoading(false);
     }
   };
 
+  useEffect(() => {
+    if (scrollToBottom) {
+      scrollViewRef.current.scrollToEnd({ animated: true });
+      setScrollToBottom(false);
+    }
+  }, [scrollToBottom]);
+
   return (
     <SafeAreaView style={styles.container}>
-      <View style={styles.chatWindow}>
+      <ScrollView ref={scrollViewRef} contentContainerStyle={styles.chatWindow}>
         {chatHistory.map((message, index) => (
-          <View key={index} style={message.user ? styles.userMessage : styles.aiMessage}>
+          <View
+            key={index}
+            style={message.user ? styles.userMessage : styles.aiMessage}
+          >
             <Text style={styles.messageText}>{message.message}</Text>
+            {message.user && loading && (
+              <ActivityIndicator
+                style={styles.loadingIndicator}
+                size="small"
+                color="#0000ff"
+              />
+            )}
           </View>
         ))}
-      </View>
+      </ScrollView>
       <View style={styles.inputRow}>
         <TextInput
           style={styles.textInput}
@@ -32,7 +101,8 @@ const AIChat = () => {
           onChangeText={setUserInput}
           placeholder="Type your message..."
         />
-        <Button title="Send" onPress={sendMessage} />
+        <Button title="Send" onPress={sendMessage} disabled={loading} />
+        {buttonLoading && <ActivityIndicator color="#0000ff" />}
       </View>
     </SafeAreaView>
   );
@@ -41,34 +111,35 @@ const AIChat = () => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#fff',
+    backgroundColor: "#fff",
     paddingHorizontal: 10,
     padding: 40,
   },
   chatWindow: {
-    flex: 1,
     padding: 10,
   },
   userMessage: {
-    backgroundColor: '#ddd',
+    backgroundColor: "#ddd",
     borderRadius: 10,
     padding: 10,
     marginBottom: 10,
-    alignSelf: 'flex-end',
+    alignSelf: "flex-end",
+    maxWidth: "70%",
   },
   aiMessage: {
-    backgroundColor: '#eee',
+    backgroundColor: "#eee",
     borderRadius: 10,
     padding: 10,
     marginBottom: 10,
-    alignSelf: 'flex-start',
+    alignSelf: "flex-start",
+    maxWidth: "70%",
   },
   messageText: {
     fontSize: 16,
   },
   inputRow: {
-    flexDirection: 'row',
-    alignItems: 'center',
+    flexDirection: "row",
+    alignItems: "center",
     padding: 10,
   },
   textInput: {
@@ -76,7 +147,12 @@ const styles = StyleSheet.create({
     marginRight: 10,
     padding: 8,
     borderRadius: 5,
-    backgroundColor: '#f5f5f5',
+    backgroundColor: "#f5f5f5",
+  },
+  loadingIndicator: {
+    position: "absolute",
+    bottom: 5,
+    right: 5,
   },
 });
 

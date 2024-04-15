@@ -1,6 +1,6 @@
 import axios from "axios";
 import { LOGIN_ENDPOINT, REGISTER_ENDPOINT } from "./endPoints";
-import { EDIT_ENDPOINT } from "./endPoints";
+import { EDIT_ENDPOINT, SOS_ENDPOINT } from "./endPoints";
 
 const axiosInstance = axios.create({
   baseURL: "https://sentinel-backend-14.onrender.com",
@@ -29,7 +29,7 @@ export default axiosInstance;
 export const register = async (username, email, password) => {
   try {
     const response = await axiosInstance.post(REGISTER_ENDPOINT, {
-     username,
+      username,
       email,
       password,
     });
@@ -53,7 +53,21 @@ export const login = async (email, password) => {
 
 export const editUser = async (userId, userData) => {
   try {
-    const response = await axiosInstance.post(`${EDIT_ENDPOINT}/${userId}`, userData);
+    const response = await axiosInstance.post(
+      `${EDIT_ENDPOINT}/${userId}`,
+      userData
+    );
+    return response;
+  } catch (error) {
+    throw error;
+  }
+};
+
+export const sos_Api = async (userData) => {
+  try {
+    const response = await axiosInstance.post(SOS_ENDPOINT, {
+      userData,
+    });
     return response;
   } catch (error) {
     throw error;
