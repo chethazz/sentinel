@@ -137,7 +137,7 @@ const NearbyHospitals = () => {
           style={styles.button}
           onPress={() => fetchNearbyPlaces("police")}
         >
-          <Text style={styles.buttonText}>PoliceStations</Text>
+          <Text style={styles.buttonText}>Police Stations</Text>
         </TouchableOpacity>
       </View>
 

@@ -36,7 +36,7 @@ const DATA = [
     icon: require("../assets/icons/sc.png"),
   },
   {
-    title: "Nearby Hospitals",
+    title: "Hospitals & Police Stations",
     routeName: "NearbyHospitals",
     icon: require("../assets/icons/nbh.png"),
   },
