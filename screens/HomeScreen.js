@@ -60,8 +60,8 @@ export default function HomeScreen() {
   const handleSOSRequest = async () => {
     try {
       const response = await sos_Api({
-        allergies: userData.allergies,
         address: userData.address,
+        allergies: userData.allergyNotes,
         bloodType: userData.bloodType,
       });
       console.log(response);
