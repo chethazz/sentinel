@@ -11,31 +11,37 @@ import {
 import * as Contacts from "expo-contacts";
 import { SafeAreaView } from "react-native-safe-area-context";
 
-import { useSelector , useDispatch } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import { editUser } from "../axios/axiosConfig";
 
-const handleAddEmergencyContact = async (phoneNumber,contactName , userId) => {
+const handleAddEmergencyContact = async (phoneNumber, contactName, userId) => {
   const updatedUserData = {
-     emergencyContacts : {
-      name:contactName,
-      phone:phoneNumber.toString()
-    }
-  }
+    emergencyContacts: {
+      name: contactName,
+      phone: phoneNumber.toString(),
+    },
+  };
   // console.log('emregeennnnn',updatedUserData);
- const res = await editUser(userId,updatedUserData)
- console.log('this is response ',res);
-}
+  const res = await editUser(userId, updatedUserData);
+  console.log("this is response ", res);
+};
 
-const PhoneNumberItem = React.memo(({ item: phoneNumber , contactName:contactName , userId:userId}) => (
-  <View style={styles.phoneNumberContainer}>
-    <Text style={styles.phoneNumber}>{phoneNumber}</Text>
-    <TouchableOpacity onPress={() => {handleAddEmergencyContact(phoneNumber,contactName, userId)}}>
-      <Text style={styles.addButtonText}>Add</Text>
-    </TouchableOpacity>
-  </View>
-)); //add contacts
+const PhoneNumberItem = React.memo(
+  ({ item: phoneNumber, contactName: contactName, userId: userId }) => (
+    <View style={styles.phoneNumberContainer}>
+      <Text style={styles.phoneNumber}>{phoneNumber}</Text>
+      <TouchableOpacity
+        onPress={() => {
+          handleAddEmergencyContact(phoneNumber, contactName, userId);
+        }}
+      >
+        <Text style={styles.addButtonText}>Add</Text>
+      </TouchableOpacity>
+    </View>
+  )
+); //add contacts
 
-const ContactItem = React.memo(({ item , userId }) => (
+const ContactItem = React.memo(({ item, userId }) => (
   <TouchableOpacity style={styles.contactItem}>
     <Text style={styles.contactName}>{item.name}</Text>
     {item.phoneNumbers && (
@@ -43,7 +49,11 @@ const ContactItem = React.memo(({ item , userId }) => (
         data={item.phoneNumbers}
         keyExtractor={(phoneNumber) => phoneNumber.id}
         renderItem={({ item: phoneNumber }) => (
-          <PhoneNumberItem item={phoneNumber.number} contactName={item.name} userId={userId}/>
+          <PhoneNumberItem
+            item={phoneNumber.number}
+            contactName={item.name}
+            userId={userId}
+          />
         )}
       />
     )}
@@ -51,7 +61,7 @@ const ContactItem = React.memo(({ item , userId }) => (
 ));
 
 export default function AddContacts() {
-  const userId = useSelector((state) => state?.auth.user?._id) 
+  const userId = useSelector((state) => state?.auth.user?._id);
   const [contacts, setContacts] = useState([]);
   const [searchQuery, setSearchQuery] = useState("");
 
@@ -67,9 +77,9 @@ export default function AddContacts() {
 
       // Filter out contacts without phone numbers
       const contactsWithNumbers = data.filter(
-        (contact) => contact.phoneNumbers && contact.phoneNumbers.length > 0 
+        (contact) => contact.phoneNumbers && contact.phoneNumbers.length > 0
       );
-        
+
       // Sort contacts alphabetically
       const sortedContacts = contactsWithNumbers.sort((a, b) =>
         a.name.localeCompare(b.name)
@@ -109,7 +119,9 @@ export default function AddContacts() {
     return groupedContacts;
   };
 
-  const renderContactItem = ({ item }) => <ContactItem item={item} userId={userId} />;
+  const renderContactItem = ({ item }) => (
+    <ContactItem item={item} userId={userId} />
+  );
 
   const renderGroupedContacts = () => {
     const groupedContactsData = Object.keys(groupedContacts()).map(
@@ -139,13 +151,22 @@ export default function AddContacts() {
 
   return (
     <SafeAreaView style={styles.container}>
-      <Text style={styles.title}>Select up to 5 Emergency Contacts</Text>
+      <Text style={styles.title}>Select an Emergency Contact</Text>
       <TextInput
         style={styles.searchInput}
         placeholder="Search contacts..."
         value={searchQuery}
         onChangeText={handleSearch}
       />
+      <View style={[styles.phoneNumberContainer, styles.phoneNumberContainer1]}>
+        <View style={styles.nameAndNumber}>
+          <Text style={styles.contactName}>Abhilash</Text>
+          <Text style={styles.phoneNumber}>+91 6238691742</Text>
+        </View>
+        <TouchableOpacity onPress={() => {}}>
+          <Text style={styles.removeButtonText}>Remove</Text>
+        </TouchableOpacity>
+      </View>
       {renderGroupedContacts()}
     </SafeAreaView>
   );
@@ -156,6 +177,14 @@ const styles = StyleSheet.create({
     paddingHorizontal: 20,
     paddingTop: 20,
   },
+  removeButtonText: {
+    fontSize: 14,
+    padding: 6,
+    color: "rgb(100,100,100)",
+    backgroundColor: "rgb(215, 215, 215)",
+    borderRadius: 10,
+  },
+
   title: {
     fontSize: 35,
     marginBottom: 10,
@@ -183,8 +212,13 @@ const styles = StyleSheet.create({
   phoneNumberContainer: {
     flexDirection: "row",
     marginVertical: 5,
-
     alignItems: "center",
+  justifyContent: 'space-between',
+  phoneNumberContainer1: {
+    backgroundColor: "rgb(235, 235, 235)",
+    height: 100,
+    padding: 20,
+    borderRadius: 10,
   },
   phoneNumber: {
     fontSize: 16,
