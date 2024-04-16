@@ -64,12 +64,11 @@ export default function Earthquake() {
         />
       </View>
       {earthquakes.map((earthquake) => (
-        <View style={styles.eqContainer}>
+        <View style={styles.eqContainer} key={earthquake.title}>
           <Text style={styles.eqTitle}>{earthquake.title}</Text>
           <Text styles={styles.eqDate}>{earthquake.date}</Text>
           <TouchableOpacity
             style={styles.moreInfoButton}
-            key={earthquake.title}
             onPress={() => Linking.openURL(earthquake.url)}
           >
             <Text>More info</Text>
