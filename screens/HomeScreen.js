@@ -13,6 +13,7 @@ import { useNavigation } from "@react-navigation/native";
 import { Link, router, useFocusEffect } from "expo-router"; // Ensure to import useFocusEffect
 import { Accelerometer } from "expo-sensors";
 import CarCrash from "./CarCrash";
+import { useSelector } from "react-redux";
 
 const DATA = [
   {
@@ -55,12 +56,13 @@ const DATA = [
 
 export default function HomeScreen() {
   const [carCrashDetected, setCarCrashDetected] = useState(false);
+  const userData = useSelector((state) => state.auth.user);
   const handleSOSRequest = async () => {
     try {
       const response = await sos_Api({
-        allergies: "Peanuts, Shellfish",
-        address: "123 Main St, City, Country",
-        bloodType: "AB+",
+        allergies: userData.allergies,
+        address: userData.address,
+        bloodType: userData.bloodType,
       });
       console.log(response);
     } catch (error) {

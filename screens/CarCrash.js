@@ -12,12 +12,15 @@ import { SafeAreaView } from "react-native-safe-area-context";
 import { StyleSheet } from "react-native";
 import { Audio } from "expo-av";
 import { Accelerometer } from "expo-sensors";
+import { useSelector } from "react-redux";
 
 export default function CarCrash() {
   const [timer, setTimer] = useState(60);
   const [isTimerRunning, setIsTimerRunning] = useState(false);
   const [sound, setSound] = useState();
+  const userData = useSelector((state) => state.auth.user);
 
+  console.log(userData);
   useEffect(() => {
     let interval;
 
@@ -47,9 +50,9 @@ export default function CarCrash() {
             const handleSOSRequest = async () => {
               try {
                 const response = await sos_Api({
-                  allergies: "Peanuts, Shellfish",
-                  address: "123 Main St, City, Country",
-                  bloodType: "AB+",
+                  allergies: userData.allergies,
+                  address: userData.address,
+                  bloodType: userData.bloodType,
                 });
                 console.log(response);
               } catch (error) {

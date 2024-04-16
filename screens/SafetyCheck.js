@@ -18,6 +18,7 @@ export default function SafetyCheck() {
   const [countdown, setCountdown] = useState(0);
   const [isRunning, setIsRunning] = useState(false);
   const [currentLocation, setCurrentLocation] = useState(null);
+  const userData = useSelector((state) => state.auth.user);
   const [initialRegion, setInitialRegion] = useState({
     latitude: 0,
     longitude: 0,
@@ -42,9 +43,9 @@ export default function SafetyCheck() {
       const handleSOSRequest = async () => {
         try {
           const response = await sos_Api({
-            allergies: "Peanuts, Shellfish",
-            address: "123 Main St, City, Country",
-            bloodType: "AB+",
+            allergies: userData.allergies,
+            address: userData.address,
+            bloodType: userData.bloodType,
           });
           console.log(response);
         } catch (error) {
