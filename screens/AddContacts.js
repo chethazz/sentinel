@@ -214,6 +214,7 @@ const styles = StyleSheet.create({
     marginVertical: 5,
     alignItems: "center",
   justifyContent: 'space-between',
+  },
   phoneNumberContainer1: {
     backgroundColor: "rgb(235, 235, 235)",
     height: 100,
